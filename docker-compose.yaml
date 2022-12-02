@@ -1,0 +1,29 @@
+version: '3'
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      # To access the NPM UI
+      - '81:81'
+      # HTTP port
+      - '80:80'
+      # HTTPS port
+      - '443:443'
+    environment:
+      url: https://resume.musubi.dev
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+      # Put your non Docker container here
+      # - path/to/your/app:/mnt/user/appdata/yourAppName
+    restart: unless-stopped
+    networks:
+      - npm_network
+
+networks:
+  npm_network:
+    driver: bridge
+
+
+
