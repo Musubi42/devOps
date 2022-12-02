@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+    gravitational:
+        hostname: localhost
+        container_name: teleport
+        volumes:
+            - '/opt/portainer/serverOim/teleport/volumes/teleport/config:/etc/teleport'
+            - '/opt/portainer/serverOim/teleport/volumes/teleport/data:/var/lib/teleport'
+        ports:
+            - '3023:3023'
+            - '3025:3025'
+            - '3080:3080'
+        image: 'public.ecr.aws/gravitational/teleport:11.0.3'
