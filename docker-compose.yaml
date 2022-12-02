@@ -9,5 +9,6 @@ services:
         ports:
             - '3023:3023'
             - '3025:3025'
+            # To access the UI through a browser
             - '3080:3080'
         image: 'public.ecr.aws/gravitational/teleport:11.0.3'
