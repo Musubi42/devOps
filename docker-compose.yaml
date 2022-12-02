@@ -1,0 +1,49 @@
+version: '3'
+services:
+  mariadb:
+    image: mariadb
+    container_name: nextcloud-mariadb
+    restart: unless-stopped
+    ports:
+      - '32568:3306'
+    env_file:
+      - .env
+    volumes:
+      - ./volumes/mariadb/db:/var/lib/mysql
+      - ./volumes/mariadb/init:/docker-entrypoint-initdb.d
+    networks:
+      - npm_network
+
+  redis:
+    image: redis:alpine
+    container_name: nextcloud-redis
+    restart: unless-stopped
+    env_file:
+      - .env
+    command: redis-server --requirepass gO9emB41ZmY9nmUdprCy
+    volumes:
+      - ./volumes/redis:/data
+    networks:
+      - npm_network
+
+  nextcloud:
+    image: nextcloud:latest
+    hostname: nextcloud
+    container_name: nextcloud
+    depends_on:
+      - redis
+      - mariadb
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    volumes:
+      - ./volumes/nextcloud:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - npm_network
+
+
+networks:
+  npm_network:
+    driver: bridge
