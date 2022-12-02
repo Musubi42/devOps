@@ -14,3 +14,10 @@ networks:
     # external: true
     diver: bridge
 ```
+
+
+## Open Port
+
+```bash
+sudo ufw allow 9443
+```
