@@ -20,3 +20,10 @@ networks:
     driver: bridge
 ```
 
+### Open port
+
+```bash
+sudo ufw allow 81 \
+sudo ufw allow 80 \
+sudo ufw allow 443
+```
