@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  ghost:
+  conrad-design_ghost_content:
     image: ghost:5.8.3
     container_name: ghostConradDesignContent
     ports:
@@ -31,9 +31,11 @@ services:
       - /opt/portainer/conrad-design/ghost/volumes:/var/lib/ghost/content
     networks:
       - npm_network
+    depends_on:
+      - ghost_mysql
     restart: unless-stopped
 
-  ghost_mysql:
+  conrad-design_ghost_mysql:
     image: mysql:8
     container_name: ghostConradDesignDB
     expose:
