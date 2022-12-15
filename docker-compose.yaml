@@ -28,7 +28,7 @@ services:
       # mail.smtp.starttls.enable: true
       # mail.smtp.starttls.required: true
     volumes:
-      - /opt/portainer/conrad-design/ghost/volumes:/var/lib/ghost/content
+      - /opt/portainer/conrad-design/ghost/volumes/content:/var/lib/ghost/content
     networks:
       - npm_network
     depends_on:
@@ -46,7 +46,7 @@ services:
       MYSQL_USER_PASSWORD: G2VbbJiEu3iLw
       MYSQL_ROOT_PASSWORD: FUeylplflrK4ZA
     volumes:
-      - /opt/portainer/conrad-design/ghost/volumes:/var/lib/mysql
+      - /opt/portainer/conrad-design/ghost/volumes/mysql:/var/lib/mysql
     networks:
       - npm_network
     restart: unless-stopped
