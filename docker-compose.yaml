@@ -32,7 +32,7 @@ services:
     networks:
       - npm_network
     depends_on:
-      - ghost_mysql
+      - conrad-design_ghost_mysql
     restart: unless-stopped
 
   conrad-design_ghost_mysql:
