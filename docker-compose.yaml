@@ -9,7 +9,7 @@ services:
       url: https://conrad-design.fr
       database__client: mysql
       database__connection__host: conrad-design_ghost_mysql
-      database__connection__user: jeanLucDeLaCompta
+      database__connection__user: root
       database__connection__password: G2VbbJiEu3iLw
       database__connection__database: ghost
       # Configuring SMTP
