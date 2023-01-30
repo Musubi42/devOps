@@ -4,7 +4,7 @@ services:
     image: ghost:latest
     container_name: ghostConradDesignContent
     ports:
-      - 8082:2368
+      - 8011:2368
     environment:
       url: https://conrad-design.fr
       database__client: mysql
