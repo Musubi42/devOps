@@ -16,6 +16,7 @@ services:
     volumes:
       - /opt/portainer/NPM/volumes/data:/data
       - /opt/portainer/NPM/volumes/letsencrypt:/letsencrypt
+      - /opt/portainer/NPM/volumes/etc:/etc
       # Put your non Docker container here
       # - path/to/your/app:/mnt/user/appdata/yourAppName
       - /opt/portainer/Epitech/Projects/NSA:/mnt/user/appdata/Epitech/Projets/NSA
