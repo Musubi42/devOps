@@ -8,9 +8,9 @@ services:
       # To access the NPM UI
       - '82:82'
       # HTTP port
-      #- '80:80'
+      - '80:80'
       # HTTPS port
-      #- '443:443'
+      - '443:443'
     environment:
       url: https://resume.musubi.dev
     volumes:
