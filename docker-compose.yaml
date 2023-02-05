@@ -11,8 +11,6 @@ services:
       - '80:80'
       # HTTPS port
       - '443:443'
-    environment:
-      url: https://resume.musubi.dev
     volumes:
       - /opt/portainer/NginxProxyManager/volumes/data:/data
       - /opt/portainer/NginxProxyManager/volumes/letsencrypt:/letsencrypt
