@@ -14,8 +14,8 @@ services:
     environment:
       url: https://resume.musubi.dev
     volumes:
-      - /opt/portainer/NPM/volumes/data:/data
-      - /opt/portainer/NPM/volumes/letsencrypt:/letsencrypt
+      - /opt/portainer/NPM_test/volumes/data:/data
+      - /opt/portainer/NPM_test/volumes/letsencrypt:/letsencrypt
       # - /opt/portainer/NPM/volumes/etc:/etc
       # Put your non Docker container here
       # - path/to/your/app:/mnt/user/appdata/yourAppName
