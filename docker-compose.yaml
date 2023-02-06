@@ -3,7 +3,6 @@ services:
   app:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: NginxProxyManager
-    restart: unless-stopped
     ports:
       # To access the NPM UI
       - '82:81'
@@ -15,10 +14,17 @@ services:
       - /opt/portainer/NginxProxyManager/volumes/data:/data
       - /opt/portainer/NginxProxyManager/volumes/letsencrypt:/letsencrypt
       # - /opt/portainer/NPM/volumes/etc:/etc
+
       # Put your non Docker container here
       # - path/to/your/app:/mnt/user/appdata/yourAppName
+
+      # All containers for Epitech projects
       # - /opt/portainer/Epitech/Projects/NSA:/mnt/user/appdata/Epitech/Projets/NSA
-      # - /opt/portainer/conrad_edison:/mnt/user/appdata/conrad_edison/conradoProd
+
+      # All environnement for conrad_edison
+      - /opt/portainer/conrad_edison/prod:/mnt/user/appdata/conrad_edison/prod
+      # - /opt/portainer/conrad_edison/dev:/mnt/user/appdata/conrad_edison/dev
+      # - /opt/portainer/conrad_edison/staging:/mnt/user/appdata/conrad_edison/staging
     restart: unless-stopped
     networks:
       - npm_network
