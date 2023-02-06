@@ -17,13 +17,13 @@ services:
       mail__transport: SMTP
       # mail__from: staff@newsletter.self-made-man.fr
       # Options
-      mail__options__service: Mailgun
-      mail__options__host: smtp.eu.mailgun.org
-      mail__options__port: 465
+      mail__options__service: Sendinblue
+      mail__options__host: smtp-relay.sendinblue.com 
+      mail__options__port: 587
       mail__options__secure: true
       # Options.Auth
-      mail__options__auth__user: postmaster@newsletter.conrad-design.fr
-      mail__options__auth__pass: ef36dce6bdb53e98f1aaee6848dd9036-31eedc68-97eb7e8b
+      mail__options__auth__user: contact@conrad-edison.fr
+      mail__options__auth__pass: v5n2xIE9YdzWhsV6
       #
       # mail.smtp.starttls.enable: true
       # mail.smtp.starttls.required: true
