@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 services:
   ghost:
     image: ghost:latest
@@ -33,7 +33,7 @@ services:
       - npm_network
       - self-made-man_network
     ports:
-      - 8084:2368
+      - 8012:2368
     restart: unless-stopped
 
   ghost_mysql:
@@ -56,6 +56,3 @@ networks:
     driver: bridge
   self-made-man_network:
     driver: bridge  
-
-
-
