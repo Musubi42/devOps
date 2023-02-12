@@ -5,7 +5,7 @@ services:
     container_name: NginxProxyManager
     ports:
       # To access the NPM UI
-      - '82:81'
+      - '81:81'
       # HTTP port
       - '80:80'
       # HTTPS port
