@@ -1,0 +1,55 @@
+version: '3.3'
+services:
+  express:
+    build: .
+    container_name: env_express
+    depends_on:
+      - mongo
+    volumes:
+      - ${VOLUME_EXPRESS}
+    command: npm run start
+    ports:
+      - 4200:3000
+    networks:
+      - npm_network
+      - env_network
+
+  mongo:
+    image: mongo:jammy
+    container_name: env_mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - ${VOLUME_MONGO}
+    expose:
+      - 27017
+    networks:
+      - env_network
+
+  mongo-express:
+    image: mongo-express
+    container_name: env_mongo-express
+    depends_on:
+      - mongo
+    environment:
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=${ME_CONFIG_MONGODB_ENABLE_ADMIN}
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${ME_CONFIG_MONGODB_ADMINUSERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${ME_CONFIG_MONGODB_ADMINPASSWORD}
+      - ME_CONFIG_MONGODB_SERVER=${ME_CONFIG_MONGODB_SERVER}
+      - ME_CONFIG_BASICAUTH_USERNAME=${ME_CONFIG_BASICAUTH_USERNAME}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${ME_CONFIG_BASICAUTH_PASSWORD}
+    volumes:
+      - ${VOLUME_MONGO_EXPRESS}
+    ports:
+      - 4201:8081
+    networks:
+      - env_network
+      - npm_network
+
+
+networks:
+  npm_network:
+    driver: bridge
+  env_network:
+    driver: bridge
