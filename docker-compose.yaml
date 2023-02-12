@@ -12,8 +12,7 @@ services:
       - '443:443'
     volumes:
       - /opt/portainer/NginxProxyManager/volumes/data:/data
-      - /opt/portainer/NginxProxyManager/volumes/letsencrypt:/letsencrypt
-      # - /opt/portainer/NPM/volumes/etc:/etc
+      - /opt/portainer/NginxProxyManager/volumes/letsencrypt:/etc/letsencrypt
 
       # Put your non Docker container here
       # - path/to/your/app:/mnt/user/appdata/yourAppName
