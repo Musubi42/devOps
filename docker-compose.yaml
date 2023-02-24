@@ -22,4 +22,4 @@ services:
 networks:
   npm_network:
     # external: true
-    diver: bridge
+    dirver: bridge
