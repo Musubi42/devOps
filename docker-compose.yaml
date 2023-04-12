@@ -1,6 +1,6 @@
 version: '3'
 services:
-  epidocs:
+  musudoc:
     container_name: epidocs
     image: musubi42/epidocs:v0.0.13
     ports:
