@@ -1,7 +1,7 @@
 version: '3'
 services:
   musudoc:
-    container_name: epidocs
+    container_name: musudoc
     image: musubi42/epidocs:v0.0.13
     ports:
       - 42:4200
