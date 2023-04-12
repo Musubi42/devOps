@@ -1,0 +1,8 @@
+{
+  "label": "MiniChat",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "The docs for MiniChat"
+  }
+}

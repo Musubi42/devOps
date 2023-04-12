@@ -1,0 +1,14 @@
+name: Update the docs folder
+
+on:
+  push:
+    branches: [ "epidocs" ]
+
+jobs:
+  update:
+    runs-on: self-hosted
+    steps:
+      # Create a script to check if all the tools I need are on the server
+      # git degit 
+      - name: Pull the latest docs from GitHub
+        run: bash /home/debian/bin/EpiDocs_CD_Update_MD.sh

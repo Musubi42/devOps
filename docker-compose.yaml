@@ -1,0 +1,16 @@
+version: '3'
+services:
+  epidocs:
+    container_name: epidocs
+    image: musubi42/epidocs:v0.0.13
+    ports:
+      - 42:4200
+    volumes:
+      - /opt/portainer/Epitech/EpiDocs:/home/node/docusaurus
+    restart: unless-stopped
+    networks:
+      - npm_network
+
+networks:
+  npm_network:
+    driver: bridge
