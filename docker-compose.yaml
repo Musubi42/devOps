@@ -19,6 +19,8 @@ services:
 
       # All containers for Epitech projects
       # - /opt/portainer/Epitech/Projects/NSA:/mnt/user/appdata/Epitech/Projets/NSA
+      - /opt/portainer/Epitech/EpiDocs/specificDocs/RedSync:/mnt/user/appdata/specificDocs/RedSync
+      - /opt/ansible/Epitech/SYFY:/mnt/user/appdata/Epitech/SYFY
 
       # All environnement for conrad_edison
       - /opt/portainer/conrad_edison/prod:/mnt/user/appdata/conrad_edison/prod
