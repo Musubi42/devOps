@@ -1,7 +1,7 @@
 backend:
   name: github
-  branch: musudoc 
-  repo: https://github.com/Musubi42/devOps/
+  branch: musudocs 
+  repo: Musubi42/devOps/
 
 # These lines should *not* be indented
 media_folder: "static/img" # Media files will be stored in the repo under static/images/uploads
