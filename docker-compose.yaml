@@ -10,22 +10,22 @@ services:
       - '80:80'
       # HTTPS port
       - '443:443'
-    volumes:
-      - /opt/portainer/NginxProxyManager/volumes/data:/data
-      - /opt/portainer/NginxProxyManager/volumes/letsencrypt:/etc/letsencrypt
+    # volumes:
+      # - /opt/portainer/NginxProxyManager/volumes/data:/data
+      # - /opt/portainer/NginxProxyManager/volumes/letsencrypt:/etc/letsencrypt
 
-      # Put your non Docker container here
-      # - path/to/your/app:/mnt/user/appdata/yourAppName
+      # # Put your non Docker container here
+      # # - path/to/your/app:/mnt/user/appdata/yourAppName
 
-      # All containers for Epitech projects
-      # - /opt/portainer/Epitech/Projects/NSA:/mnt/user/appdata/Epitech/Projets/NSA
-      - /opt/portainer/Epitech/EpiDocs/specificDocs/RedSync:/mnt/user/appdata/specificDocs/RedSync
-      - /opt/ansible/Epitech/SYFY:/mnt/user/appdata/Epitech/SYFY
+      # # All containers for Epitech projects
+      # # - /opt/portainer/Epitech/Projects/NSA:/mnt/user/appdata/Epitech/Projets/NSA
+      # - /opt/portainer/Epitech/EpiDocs/specificDocs/RedSync:/mnt/user/appdata/specificDocs/RedSync
+      # - /opt/ansible/Epitech/SYFY:/mnt/user/appdata/Epitech/SYFY
 
-      # All environnement for conrad_edison
-      - /opt/portainer/conrad_edison/prod:/mnt/user/appdata/conrad_edison/prod
-      # - /opt/portainer/conrad_edison/dev:/mnt/user/appdata/conrad_edison/dev
-      # - /opt/portainer/conrad_edison/staging:/mnt/user/appdata/conrad_edison/staging
+      # # All environnement for conrad_edison
+      # - /opt/portainer/conrad_edison/prod:/mnt/user/appdata/conrad_edison/prod
+      # # - /opt/portainer/conrad_edison/dev:/mnt/user/appdata/conrad_edison/dev
+      # # - /opt/portainer/conrad_edison/staging:/mnt/user/appdata/conrad_edison/staging
     restart: unless-stopped
     networks:
       - npm_network
