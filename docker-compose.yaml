@@ -10,9 +10,9 @@ services:
       - '80:80'
       # HTTPS port
       - '443:443'
-    # volumes:
-      # - /opt/portainer/NginxProxyManager/volumes/data:/data
-      # - /opt/portainer/NginxProxyManager/volumes/letsencrypt:/etc/letsencrypt
+    volumes:
+      - /opt/portainer/NginxProxyManager/volumes/data:/data
+      - /opt/portainer/NginxProxyManager/volumes/letsencrypt:/etc/letsencrypt
 
       # # Put your non Docker container here
       # # - path/to/your/app:/mnt/user/appdata/yourAppName
