@@ -19,7 +19,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'Musubi42', // Usually your GitHub org/user name.
-  projectName: 'EpiDocs', // Usually your repo name.
+  projectName: 'MusuDocs', // Usually your repo name.
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
@@ -42,14 +42,14 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/Musubi42/EpitechDocs/tree/EpiDocs',
+            'https://github.com/Musubi42/devOps/tree/musudoc/docs',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/Musubi42/devOps/tree/musudoc/blog',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -127,7 +127,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} EpiDocs, Musubi. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} MusuDocs, Musubi. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
