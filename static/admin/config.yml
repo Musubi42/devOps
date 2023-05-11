@@ -1,6 +1,6 @@
 backend:
   name: github
-  branch: musudocs 
+  branch: musudoc
   repo: Musubi42/devOps
 
 # These lines should *not* be indented
