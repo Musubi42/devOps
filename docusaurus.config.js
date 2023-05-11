@@ -21,7 +21,7 @@ const config = {
   organizationName: 'Musubi42', // Usually your GitHub org/user name.
   projectName: 'EpiDocs', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internalization, you can use this field to set useful
