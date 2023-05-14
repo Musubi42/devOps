@@ -34,7 +34,7 @@ collections:
 
 - name: Epitech
   label: "Epitech"
-  folder: docs/Epitech/MiniChat
+  folder: docs/Epitech
   identifier_field: title
   extension: md
   widget: "list"
