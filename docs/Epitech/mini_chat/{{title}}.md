@@ -1,7 +1,7 @@
 ---
 title: d
 slug: d
-project: d
+project: mini_chat
 tags:
   - d
 authors:
