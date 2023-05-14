@@ -32,8 +32,8 @@ collections:
         - { name: url, label: URL, widget: string } 
         - { name: imageUrl, label: ImageURL, widget: string } 
 
-- name: Docs/Epitech
-  label: "Docs/Epitech"
+- name: Epitech
+  label: "Epitech"
   folder: docs/Epitech/MiniChat
   identifier_field: title
   extension: md
