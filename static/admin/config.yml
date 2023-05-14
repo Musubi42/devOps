@@ -42,7 +42,6 @@ collections:
   nested:
       depth: 100 # max depth to show in the collection tree
       summary: '{{title}}' # optional summary for a tree node, defaults to the inferred title field
-  slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
   fields:
     - { name: title, label: Title, widget: string }
     - { name: body, label: Body, widget: markdown }
@@ -58,7 +57,6 @@ collections:
         - { name: title, label: Title, widget: string } 
         - { name: url, label: URL, widget: string } 
         - { name: imageUrl, label: ImageURL, widget: string } 
-  meta: { path: { widget: string, label: 'Path', index_file: 'index' } }
 
 - name: Docs
   label: "Docs"
