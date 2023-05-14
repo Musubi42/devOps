@@ -59,7 +59,7 @@ collections:
         - { name: title, label: Title, widget: string } 
         - { name: url, label: URL, widget: string } 
         - { name: imageUrl, label: ImageURL, widget: string } 
-  meta: { path: { widget: string, label: 'Path', index_file: 'index' } }
+  meta: { path: { widget: string, label: 'Path', index_file: '{{title}}' } }
 
 - name: Docs
   label: "Docs"
