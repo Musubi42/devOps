@@ -1,18 +1,10 @@
 ---
 title: Bernstein Bootstrap
-slug: bootstrap_bernstein
-project: k8s
-tags:
-  - test
-authors:
-  - name: Raph
-    title: Raph
-    url: e
-    imageUrl: e
 ---
+
 # To begin, installation
 
-[Minikube](https://kubernetes.io/fr/docs/tasks/tools/install-minikube/) 
+[Minikube](https://kubernetes.io/fr/docs/tasks/tools/install-minikube/)
 
 [Docker](https://docs.docker.com/engine/install/debian/)
 
@@ -59,7 +51,7 @@ C'est un peu la même chose que la commande, `docker ps` pour lister les contain
 kubectl get nodes
 ```
 
-# How to create a POD with *minikube*
+# How to create a POD with _minikube_
 
 Create a `deployment.yml` file containing the following
 

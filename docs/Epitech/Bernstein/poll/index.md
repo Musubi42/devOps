@@ -1,8 +1,7 @@
 ---
 title: Poll deployment
-tags:
-  - test
 ---
+
 # Installation
 
 Docker
@@ -61,8 +60,6 @@ Start the deployment
 ```shell
 kubectl apply -f poll.deployment.yaml
 ```
-
-
 
 Check deployment
 

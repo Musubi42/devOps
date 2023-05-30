@@ -1,8 +1,3 @@
 {
-  "label": "RedSync",
-  "position": 5,
-  "link": {
-    "type": "generated-index",
-    "description": "The docs for RedSync"
-  }
+  "position": 1
 }

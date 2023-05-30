@@ -1,5 +1,5 @@
 ---
-title: Bernstein Introduction
+title: Bernstein
 ---
 
 # References
