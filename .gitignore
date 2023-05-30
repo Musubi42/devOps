@@ -23,3 +23,5 @@ yarn-error.log*
 .netlify
 
 pnpm-lock.yaml
+
+docs/
