@@ -32,9 +32,37 @@ collections:
           - { name: url, label: URL, widget: string }
           - { name: imageUrl, label: ImageURL, widget: string }
 
+  - name: HowTo
+    label: "How to"
+    folder: docs/how_to
+    identifier_field: title
+    extension: md
+    widget: "list"
+    create: true
+    slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    nested:
+      depth: 100 # max depth to show in the collection tree
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: body, label: Body, widget: markdown }
+      - label: "Upload file"
+        name: "upload_file"
+        widget: "file"
+        default: ""
+        media_folder: "/uploads"
+        public_folder: "/uploads"
+        media_library:
+          config:
+            multiple: true
+      # Rajouter les tags plus tard pour faire de la recherche
+      # - label: "Tags"
+      #   name: "tags"
+      #   widget: "list"
+    meta: { path: { widget: string, label: "Path", index_file: "index" } }
+
   - name: Epitech
     label: "Epitech"
-    folder: docs/Epitech
+    folder: docs/epitech
     identifier_field: title
     extension: md
     widget: "list"
