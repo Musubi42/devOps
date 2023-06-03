@@ -34,7 +34,7 @@ collections:
 
   - name: HowTo
     label: "How to"
-    folder: docs/how_to
+    folder: docs/How+to
     identifier_field: title
     extension: md
     widget: "list"
