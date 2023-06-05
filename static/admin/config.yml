@@ -46,8 +46,7 @@ collections:
         name: "upload_file"
         widget: "file"
         default: ""
-        media_folder: "/uploads"
-        public_folder: "/uploads"
+        media_folder: "uploads"
         media_library:
           config:
             multiple: true
@@ -75,8 +74,7 @@ collections:
         name: "upload_file"
         widget: "file"
         default: ""
-        media_folder: "static/epitech/uploads"
-        public_folder: "/images/uploads"
+        media_folder: "uploads"
         media_library:
           config:
             multiple: true
