@@ -25,7 +25,7 @@ services:
       # - /opt/ansible/Epitech/SYFY:/mnt/user/appdata/Epitech/SYFY
 
       # # All environnement for conrad_edison
-      # - /opt/portainer/conrad_edison/prod:/mnt/user/appdata/conrad_edison/prod
+      - /opt/portainer/conrad_edison/prod:/mnt/user/appdata/conrad_edison/prod
       # # - /opt/portainer/conrad_edison/dev:/mnt/user/appdata/conrad_edison/dev
       # # - /opt/portainer/conrad_edison/staging:/mnt/user/appdata/conrad_edison/staging
     restart: unless-stopped
