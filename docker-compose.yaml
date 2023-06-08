@@ -13,6 +13,8 @@ services:
     volumes:
       - /opt/portainer/NginxProxyManager/volumes/data:/data
       - /opt/portainer/NginxProxyManager/volumes/letsencrypt:/etc/letsencrypt
+      # Add access to letsencrypt logs
+      - /opt/portainer/NginxProxyManager/volumes/logs:/tmp/letsencrypt-log
 
       # # Put your non Docker container here
       # # - path/to/your/app:/mnt/user/appdata/yourAppName
