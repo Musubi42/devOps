@@ -17,7 +17,15 @@ D﻿epending on the stage of the app it's a different region :
 G﻿o to the Marjory AWS account, choose **team-module**.
 
 From the AWS Management console, choose the right region :
-https://raw.githubusercontent.com/Musubi42/devOps/musudoc/docs/Marjory/appbuilder/howtodeleteapp/uploads/choose_region.png
+
+![How to choose a region](https://raw.githubusercontent.com/Musubi42/devOps/musudoc/docs/Marjory/appbuilder/howtodeleteapp/uploads/choose_region.png)
+
+G﻿o to DynamoDB (you can access it from the search bar)
+
+F﻿rom DynamoDB, click on *Explore items* :
+
+!﻿[Explore items](https://raw.githubusercontent.com/Musubi42/devOps/musudoc/docs/Marjory/appbuilder/howtodeleteapp/uploads/
+
 
 
 ## ﻿How to delete an application from the app store Marjory
