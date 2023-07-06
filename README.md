@@ -1,4 +1,4 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/ee87c487-49d6-4714-93a7-c79668a10265/deploy-status)](https://app.netlify.com/sites/musudocs/deploys)
+[ ![Netlify Status](https://api.netlify.com/api/v1/badges/ee87c487-49d6-4714-93a7-c79668a10265/deploy-status)](https://app.netlify.com/sites/musudocs/deploys)
 
 # DevOps
 
@@ -37,4 +37,7 @@ Donc si ça s'upload à cet emplacement https://github.com/Musubi42/devOps/blob/
 Je dois convertir comme ça : https://raw.githubusercontent.com/Musubi42/devOps/musudoc/docs/Epitech/uploads/static/epitech/uploads/planningmsc.pdf
 
 Donc je peux créer des liens en utilisant cette méthode
-Je peux voir à faire un petit truc dans le futur où pendant le build le lien en créé en auto
+
+Ça c’est la racine de tout document uploadé : <https://raw.githubusercontent.com/Musubi42/devOps/musudoc/docs/>
+
+ Je peux voir à faire un petit truc dans le futur où pendant le build le lien en créé en auto
