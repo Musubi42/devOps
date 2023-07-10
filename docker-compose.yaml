@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    ports:
+      - 44:3001
+    volumes:
+      - /opt/portainer/uptime-kuma:/app/data:ro
+    networks:
+      - npm_networks
+    restart:
+      unless-stopped
+
+networks:
+  npm_network:
+    driver: bridge
