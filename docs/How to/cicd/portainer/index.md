@@ -56,6 +56,8 @@ T﻿he `driver` is set as `bridge`, so any containers with the same network can 
 
 ## S﻿tandard setup of a service with Portainer (recommanded)
 
+### C﻿reate a new clean branch
+
 Clone the **devOps** project : 
 
 ```shell
@@ -138,7 +140,7 @@ O﻿n the **quick action** column, from left to right :
 
 ### U﻿ptime-kuma installation
 
-```
+```yaml
 version: '3.3'
 services:
   your_service_name: 
