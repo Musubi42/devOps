@@ -6,7 +6,7 @@ services:
     ports:
       - 44:3001
     volumes:
-      - /opt/portainer/uptime-kuma:/app/data:ro
+      - /opt/portainer/uptime-kuma:/app/data
     networks:
       - npm_networks
     restart:
