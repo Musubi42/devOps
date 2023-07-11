@@ -8,7 +8,7 @@ services:
     volumes:
       - /opt/portainer/uptime-kuma:/app/data
     networks:
-      - npm_networks
+      - npm_network
     restart:
       unless-stopped
 
