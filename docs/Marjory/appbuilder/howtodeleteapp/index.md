@@ -4,28 +4,25 @@ upload_file: uploads/choose_region.png
 ---
 # Prerequisites
 
-T﻿he apps are stored in AWS, in the **team-module** account.
+T﻿he apps are stored in AWS, in the **[team-module](https://marjory.awsapps.com/start#/)** account.
 
 D﻿epending on the stage of the app it's a different region :
 -﻿ Paris - prod
 -﻿ Virginie nord - dev/preprod
 -﻿ Frankfurt - staging
 
+## ﻿Delete the app version ?
 
-## ﻿How to delete a version
+### G﻿et all versions id
 
-G﻿o to the Marjory AWS account, choose **team-module**.
+```shell
+curl --location 'https://marjory-factory-api.io/v2/applications/app-digest' \
+--header 'Authorization: Bearer <Marjory_token_of_the_tenant_where_the_app_is_installed> \
+| jq | grep versions
+```
 
-From the AWS Management console, choose the right region :
-
-![How to choose a region](https://raw.githubusercontent.com/Musubi42/devOps/musudoc/docs/Marjory/appbuilder/howtodeleteapp/uploads/choose_region.png)
-
-G﻿o to DynamoDB (you can access it from the search bar)
-
-F﻿rom DynamoDB, click on *Explore items* :
-
-!﻿[Explore items](https://raw.githubusercontent.com/Musubi42/devOps/musudoc/docs/Marjory/appbuilder/howtodeleteapp/uploads/
+T﻿he result must be something like this :
 
 
 
-## ﻿How to delete an application from the app store Marjory
+## ﻿How to delete an application of the Marjory app store
