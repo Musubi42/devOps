@@ -10,6 +10,8 @@ services:
       - '80:80'
       # HTTPS port
       - '443:443'
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     volumes:
       - /opt/portainer/NginxProxyManager/volumes/data:/data
       - /opt/portainer/NginxProxyManager/volumes/letsencrypt:/etc/letsencrypt
