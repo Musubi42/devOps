@@ -29,6 +29,8 @@ services:
       # mail.smtp.starttls.required: true
     volumes:
       - /opt/portainer/conrad-design/ghost/volumes/content:/var/lib/ghost/content
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     networks:
       - npm_network
     depends_on:
