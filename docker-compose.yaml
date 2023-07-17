@@ -5,6 +5,8 @@ services:
     container_name: uptime-kuma
     ports:
       - 44:3001
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     volumes:
       - /opt/portainer/uptime-kuma/volumes:/app/data
     networks:
