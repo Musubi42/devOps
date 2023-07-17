@@ -27,7 +27,9 @@ services:
       # mail.smtp.starttls.required: ${mail.smtp.starttls.required}
     volumes:
       - ${GHOST_CONTENT_PATH}
-    depends_on: 
+    labels:
+      - com.centurylinklabs.watchtower.monitor-only="true"
+    depends_on:
       - ghost_mysql
     networks:
       - npm_network
@@ -55,4 +57,4 @@ networks:
   npm_network:
     driver: bridge
   self-made-man_network:
-    driver: bridge  
+    driver: bridge
