@@ -1,0 +1,28 @@
+version: "3"
+services:
+  watchtower:
+    container_name: watchTower
+    image: containrrr/watchtower
+    environment:
+      - TZ=Europe/Paris
+      # Start watchTower every day at 4am
+      # - WATCHTOWER_SCHEDULE= 0 0 4 * *
+      # Removes old images after updating
+      - WATCHTOWER_CLEANUP=true
+      # Update containers that have a com.centurylinklabs.watchtower.enable label set to true
+      - WATCHTOWER_LABEL_ENABLE=true
+      # https://containrrr.dev/watchtower/arguments/#without_updating_containers
+      # Could be interesting if I just to be notified of a new image, without updating it, and test it by myself before hand
+      # - WATCHTOWER_MONITOR_ONLY=true
+      # https://containrrr.dev/watchtower/arguments/#scheduling
+      # To have a full uptime I should run two instance (minimum) so I can stop one container update it, ang go along
+      # - WATCHTOWER_SCHEDULE=
+      # Send a notification message to WatchTower channel
+      # - WATCHTOWER_NOTIFICATION_URL=
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # - /root/.docker/config.json:/config.json
+      # Only to use for testing purpose
+      # command: --interval 30
+    restart: unless-stopped
