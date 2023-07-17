@@ -4,7 +4,7 @@ services:
     image: louislam/uptime-kuma:latest
     container_name: uptime-kuma
     ports:
-      - 127.0.0.1:44:3001
+      - 44:3001
     volumes:
       - /opt/portainer/uptime-kuma/volumes:/app/data
     networks:
