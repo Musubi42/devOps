@@ -30,7 +30,7 @@ services:
     volumes:
       - /opt/portainer/conrad-design/ghost/volumes/content:/var/lib/ghost/content
     labels:
-      - "com.centurylinklabs.watchtower.enable=true"
+      - com.centurylinklabs.watchtower.monitor-only="true"
     networks:
       - npm_network
     depends_on:
