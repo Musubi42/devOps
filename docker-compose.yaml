@@ -26,5 +26,3 @@ services:
       # Only to use for testing purpose
       # command: --interval 30
     restart: unless-stopped
-
-# testwebhooks
