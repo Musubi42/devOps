@@ -18,7 +18,7 @@ services:
       # To have a full uptime I should run two instance (minimum) so I can stop one container update it, ang go along
       # - WATCHTOWER_SCHEDULE=
       # Send a notification message to WatchTower channel
-      # - WATCHTOWER_NOTIFICATION_URL=
+      # - WATCHTOWER_NOTIFICATION_URL=d
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
