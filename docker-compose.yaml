@@ -11,6 +11,8 @@ services:
     volumes:
       - ./volumes/mariadb/db:/var/lib/mysql
       - ./volumes/mariadb/init:/docker-entrypoint-initdb.d
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     networks:
       - npm_network
 
@@ -23,6 +25,8 @@ services:
     command: redis-server --requirepass gO9emB41ZmY9nmUdprCy
     volumes:
       - ./volumes/redis:/data
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     networks:
       - npm_network
 
@@ -38,6 +42,8 @@ services:
       - 8080:80
     volumes:
       - ./volumes/nextcloud:/var/www/html
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     env_file:
       - .env
     networks:
