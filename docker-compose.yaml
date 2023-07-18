@@ -1,0 +1,19 @@
+version: "2.1"
+services:
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - CLI_ARGS= #optional
+    volumes:
+      - /opt/portainer/duplicati/volumes/config:/config
+      - /opt/portainer/duplicati/volumes/backups:/backups
+      - /opt/portainer/duplicati/volumes/source:/source
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    ports:
+      - 45:8200
+    restart: unless-stopped
