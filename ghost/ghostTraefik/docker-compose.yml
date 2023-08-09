@@ -1,0 +1,58 @@
+version: "3.3"
+services:
+  ghostFrontTraefik:
+    image: ghost:latest
+    container_name: ghostFrontTraefik
+    environment:
+      url: ${url}
+      database__client: ${database__client}
+      database__connection__host: ${database__connection__host}
+      database__connection__user: ${database__connection__user}
+      database__connection__password: ${database__connection__password}
+      database__connection__database: ${database__connection__database}
+      # Configuring SMTP
+      # Mail
+      mail__transport: ${mail__transport}
+      # mail__from: staff@newsletter.self-made-man.fr
+      # Options
+      mail__options__service: ${mail__options__service}
+      mail__options__host: ${mail__options__host}
+      mail__options__port: ${mail__options__port}
+      mail__options__secure: ${mail__options__secure}
+      # Options.Auth
+      mail__options__auth__user: ${mail__options__auth__user}
+      mail__options__auth__pass: ${mail__options__auth__pass}
+      #
+      # mail.smtp.starttls.enable: ${mail.smtp.starttls.enable}
+      # mail.smtp.starttls.required: ${mail.smtp.starttls.required}
+    volumes:
+      - ${GHOST_FRONT_VOLUME_PATH}
+    user: "${UID}:${GID}"
+    # labels:
+    # To auto update the container thanks to watchTower
+    # - com.centurylinklabs.watchtower.monitor-only="true"
+    depends_on:
+      - ghostMysqlTraefik
+    networks:
+      - traefik
+    ports:
+      - 1337:2368
+    restart: unless-stopped
+
+  ghostMysqlTraefik:
+    image: mysql:8
+    container_name: ghostTraefik
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ${GHOST_MYSQL_VOLUME_PATH}
+    networks:
+      - traefik
+    restart: unless-stopped
+
+networks:
+  traefik:
+    external:
+      name: traefik

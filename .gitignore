@@ -2,3 +2,5 @@
 .env
 .IDEA
 .DS_STORE
+**/volumes/
+**/.env
