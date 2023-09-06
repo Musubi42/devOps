@@ -18,7 +18,7 @@ To delete an application, you must first delete all its versions
 ### G﻿et all versions id
 
 ```shell
-curl --location 'https://marjory-factory-api.io/v2/applications/app-digest' \
+curl --location 'https://marjory-factory-api.io/v2/applications/<Application_slug>' \
 --header 'Authorization: Bearer <Marjory_token_of_the_tenant_where_the_app_is_installed>' \
 | jq | jq '.versions | to_entries[] | "\(.key): \(.value)"'
 ```
@@ -34,6 +34,28 @@ From the result, we want to retrieve all the version's id :
     "0.4.0": "65e31300-4e17-41ba-b304-6f632cebce1b"
   },
   "updatedAt": 1680619682013,
+...
+```
+
+### How to get application ID
+
+```shell
+curl --location 'https://marjory-factory-api.io/v2/applications/<Application_slug>' \
+--header 'Authorization: Bearer <Marjory_token_of_the_tenant_where_the_app_is_installed>' \
+| jq | jq '.id | to_entries[] | "\(.key): \(.value)"'
+```
+
+From the result, we want to retrieve the application's id :
+
+```jsonc
+...
+{
+    "slug": "cxmp_bug_comexposium",
+    "createdAt": "2023-08-31T14:52:50.837Z",
+    "main": "42e4a04a-1623-43e8-a9b3-e7d2ccc7e336",
+    "id": "bf31a10d-9abc-424f-a47f-74ead9fd8fa0",
+    "name": "cxmp_bug_comexposium",
+}
 ...
 ```
 
