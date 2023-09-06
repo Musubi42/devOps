@@ -20,7 +20,7 @@ To delete an application, you must first delete all its versions
 ```shell
 curl --location 'https://marjory-factory-api.io/v2/applications/app-digest' \
 --header 'Authorization: Bearer <Marjory_token_of_the_tenant_where_the_app_is_installed>' \
-| jq 
+| jq | jq '.versions | to_entries[] | "\(.key): \(.value)"'
 ```
 
 From the result, we want to retrieve all the version's id :
