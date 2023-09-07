@@ -7,11 +7,20 @@ upload_file: uploads/choose_region.png
 T﻿he apps are stored in AWS, in the **[team-module](https://marjory.awsapps.com/start#/)** account.
 
 D﻿epending on the stage of the app it's a different region :
--﻿ Paris - prod
--﻿ Virginie nord - dev/preprod
--﻿ Frankfurt - staging
+*﻿ Paris - prod
+*﻿ Virginie nord - dev/preprod
+*﻿ Frankfurt - staging
 
-To delete an application, you must first delete all its versions
+
+:::
+
+:::info
+-1 To be able to delete an app all his version's must be private.
+-2 To delete an application, you must first delete all its versions
+
+
+
+:::
 
 ## ﻿Delete all app version
 
