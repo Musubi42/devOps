@@ -1,8 +1,8 @@
 version: "3.3"
 services:
-  ghostFrontNPM:
-    image: ghost:5.8.3
-    container_name: ghostFrontNPM
+  ghost:
+    image: ghost:latest
+    container_name: ghostSelfMadeManContent
     environment:
       url: ${url}
       database__client: ${database__client}
@@ -25,31 +25,34 @@ services:
       #
       # mail.smtp.starttls.enable: ${mail.smtp.starttls.enable}
       # mail.smtp.starttls.required: ${mail.smtp.starttls.required}
-    volumes:
-      - ${GHOST_FRONT_VOLUME_PATH}
-    # user: "501:501"
-    # labels:
-    # To auto update the container thanks to watchTower
-    # - com.centurylinklabs.watchtower.monitor-only="true"
+    # volumes:
+    #   - ${GHOST_FRONT_VOLUME_PATH}
     depends_on:
-      - ghostMysqlNPM
+      - ghost_mysql
     networks:
       - npm_network
+      - self-made-man_network
     ports:
-      - 1337:2368
+      - 8085:2368
     restart: unless-stopped
 
-  ghostMysqlNPM:
+  ghost_mysql:
     image: mysql:8
-    container_name: ghostNPMDB
+    container_name: ghostSelfMadeManDB
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    volumes:
-      - ${GHOST_MYSQL_VOLUME_PATH}
+    networks:
+      - self-made-man_network
+    expose:
+      - 3306
+    # volumes:
+    #   - ${GHOST_MYSQL_VOLUME_PATH}
     restart: unless-stopped
 
 networks:
   npm_network:
+    driver: bridge
+  self-made-man_network:
     driver: bridge
