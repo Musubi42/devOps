@@ -4,9 +4,58 @@ upload_file: a
 ---
 # P﻿rerequisites
 
-A﻿ Telegram account.
+A﻿ Telegram account.\
+A﻿ server is docker & docker compose installed\
+A﻿ setup traefik
 
 # D﻿eploy Uptime-kuma
+
+C﻿reate a `docker-compose.yaml` file.
+
+```yaml
+version: '3.3'
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    volumes:
+      - ${uptime_kuma_volume_dev}
+    networks:
+      - traefik
+    labels:
+      - ${traefik_enable}
+      - ${traefik_http_routers_rule}
+      - ${traefik_http_router_entrypoints}
+      - ${traefik_http_routers_tls}
+      - ${traefik_http_routers_tls_certresolver}
+      - ${traefik_http_services}
+      # TODO: Check for non interrupting update
+      - ${watchtower_auto_update}
+    restart: unless-stopped
+
+networks:
+  traefik:
+      name: traefik
+      external: true
+
+```
+
+I﻿n the same folder, create an `.env` file like this :
+
+```shell
+# Volumes path
+uptime_kuma_volume_prod="<HOST_VOLUME_PATH>:/app/data"
+uptime_kuma_volume_dev="<HOST_VOLUME_PATH>:/app/data"
+# Labels
+traefik_enable="traefik.enable=true"
+traefik_http_routers_rule="traefik.http.routers.uptime_kuma.rule=Host(`<YOUR_DOMAIN>`)"
+# - "traefik.http.routers.uptime-kuma.entrypoints=https"
+traefik_http_router_entrypoints="traefik.http.routers.uptime_kuma.entrypoints=websecure"
+traefik_http_routers_tls="traefik.http.routers.uptime-kuma.tls=true"
+traefik_http_routers_tls_certresolver="traefik.http.routers.uptime_kuma.tls.certresolver=letsencryptresolver"
+traefik_http_services="traefik.http.services.uptime_kuma.loadbalancer.server.port=3001"
+
+```
 
 ## S﻿etup Notification with Telegram bot
 
