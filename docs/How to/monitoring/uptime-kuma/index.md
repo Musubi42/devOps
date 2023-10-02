@@ -4,9 +4,9 @@ upload_file: a
 ---
 # P﻿rerequisites
 
-A﻿ Telegram account.\
-A﻿ server is docker & docker compose installed\
-A﻿ setup traefik
+* A﻿ Telegram account.
+* A﻿ server is docker & docker compose installed.
+* A﻿ Traefik setup.
 
 # D﻿eploy Uptime-kuma
 
@@ -68,8 +68,10 @@ W﻿e need :
 
 ### C﻿reate Bot
 
-G﻿o to [Telegram botFather](https://t.me/BotFather)\
-S﻿tart the bot with the command, and follow this instruction
+G﻿o to [Telegram botFather](https://t.me/BotFather)
+
+\
+S﻿tart the bot with the command below, and follow the instructions
 
 ```shell
 /newbot
@@ -79,7 +81,7 @@ At the end of the configuration, you'll get the something like this.
 
 ![BotFather - new bot created](/img/telegram_bot_created.png "BotFather")
 
-Y﻿ou can at any time the API token from [botFather](https://t.me/BotFather) with this command
+Y﻿ou can get at any time the API token from [botFather](https://t.me/BotFather) with this command :
 
 ```
 /mybots
