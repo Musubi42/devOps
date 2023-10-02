@@ -3,16 +3,22 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma:latest
     container_name: uptime-kuma
-    ports:
-      - 44:3001
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
     volumes:
-      - /opt/portainer/uptime-kuma/volumes:/app/data
+      - ${uptime_kuma_volume_dev}
     networks:
-      - npm_network
+      - traefik
+    labels:
+      - ${traefik_enable}
+      - ${traefik_http_routers_rule}
+      - ${traefik_http_router_entrypoints}
+      - ${traefik_http_routers_tls}
+      - ${traefik_http_routers_tls_certresolver}
+      - ${traefik_http_services}
+      # TODO: Check for non interrupting update
+      - ${watchtower_auto_update}
     restart: unless-stopped
 
 networks:
-  npm_network:
-    driver: bridge
+  traefik:
+      name: traefik
+      external: true
