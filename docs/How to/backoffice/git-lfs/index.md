@@ -18,10 +18,8 @@ upload_file: d
 
 ## A﻿dd git lfs to your repo
 
-### Details about the file .gitattributes
-
 <details>
-  <summary>Toggle me!</summary>
+  <summary>**Details about the file `.gitattributes`**</summary>
   <div>
       <summary>
         The `.gitattributes` file is a configuration file used in Git repositories to specify how certain files should be treated. It's used to define attributes and rules for how Git should handle files during operations like committing, merging, and checking out.
@@ -33,14 +31,14 @@ upload_file: d
 
 1. **C﻿reate a `.gitattributes` file :**
 
-   ```
+   ```shell
    code .gitattributes
    ```
 2. **Defining Git LFS Rules :**
 
    In the `.gitattributes` file, you specify rules for which files should be tracked using Git LFS. Each rule follows the format:
 
-   ```
+   ```shell
    # Pattern
    pattern filter=lfs diff=lfs merge=lfs -text
 
@@ -56,3 +54,34 @@ upload_file: d
 3. **Commit and Push :**
 
    After you've defined the rules in the `.gitattributes` file, save the file and commit it to your Git repository. Make sure to also commit the actual files that you want to be managed by Git LFS.
+
+## G﻿it lfs cheatsheet
+
+* l﻿ist all files managed by git lfs
+
+  ```shell
+  git lfs ls-files --all
+  ```
+* T﻿rack files by its extension\
+  W﻿ill add from the `.gitattributes` file :
+
+  `*.jpeg filter=lfs diff=lfs merge=lfs -text`
+
+  ```shell
+  git lfs track "*.jpg"
+  ```
+* U﻿ntrack files by its extension
+
+  ```shell
+  git lfs untrack "*.jpg"
+  ```
+
+  W﻿ill remove from the `.gitattributes` file :
+
+  `*.jpeg filter=lfs diff=lfs merge=lfs -text`
+* T﻿rack a file by it's path
+
+  ```shell
+  git lfs track
+  ```
+* d﻿e
