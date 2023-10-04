@@ -6,11 +6,11 @@ upload_file: d
 
 **Git LFS (Large File Storage)** is an extension to Git that helps developers efficiently manage large binary files like images, videos, and datasets. Instead of storing these files directly in the Git repository, Git LFS replaces them with pointers, reducing repository size and improving performance. It seamlessly integrates with Git, making it easy to work with large files while preserving the core benefits of version control.
 
-<﻿div style={{ textAlign: 'center' }}>
+<div style={{ textAlign: 'center' }}>
 
 ![How git lfs works](/img/git-lfs.png "How git lfs works")
 
-<﻿/div>
+</div>
 
 ## P﻿rerequisites
 
@@ -19,7 +19,7 @@ upload_file: d
 ## A﻿dd git lfs to your repo
 
 <details>
-  <summary>**Details about the file `.gitattributes`**</summary>
+  <summary><strong>Details about the file <code>.gitattributes</code></strong></summary>
   <div>
       <summary>
         The `.gitattributes` file is a configuration file used in Git repositories to specify how certain files should be treated. It's used to define attributes and rules for how Git should handle files during operations like committing, merging, and checking out.
@@ -55,7 +55,7 @@ upload_file: d
 
    After you've defined the rules in the `.gitattributes` file, save the file and commit it to your Git repository. Make sure to also commit the actual files that you want to be managed by Git LFS.
 
-## G﻿it lfs cheatsheet
+## Git lfs cheatsheet
 
 * l﻿ist all files managed by git lfs
 
