@@ -1,0 +1,4 @@
+node-modules/
+.env.example
+docker-compose.yml
+dynamic.yml

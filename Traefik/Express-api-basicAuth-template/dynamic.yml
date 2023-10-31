@@ -1,0 +1,21 @@
+http:
+  # Routing
+  routers:
+    express-api:
+      rule: "Host(`api.design-gamers.com`)"
+      service: express-api
+      middlewares:
+        - https-redirect@file
+
+  # Load balancing
+  services:
+    express-api:
+      loadBalancer:
+        servers:
+          - url: "http://express-api:5555"
+          
+  # Redirige automatiquement les requêtes sur HTTPS
+  middlewares:
+    https-redirect:
+      redirectScheme:
+        scheme: "https"

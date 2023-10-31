@@ -1,0 +1,86 @@
+version: '3'
+services:
+  express-api:
+    build: .
+    labels:
+      - "traefik.enable=true"
+      # WEB
+      - "traefik.http.routers.express-api.rule=Host(`api.design-gamers.com`)"
+      - "traefik.http.routers.express-api.entrypoints=web"
+      - "traefik.http.routers.express-api.middlewares=https-redirect@file"
+      # Secure
+      - "traefik.http.routers.express-api-secure.rule=Host(`api.design-gamers.com`)"
+      - "traefik.http.routers.express-api-secure.entrypoints=websecure"
+      - "traefik.http.routers.express-api-secure.tls=true"
+      - "traefik.http.routers.express-api-secure.tls.certresolver=letsencryptresolver"
+
+      - "traefik.http.routers.express-api-secure.service=express-api"
+      - "traefik.http.services.express-api.loadbalancer.server.port=5555"
+
+      # BasicAuth
+      - "traefik.http.routers.express-api.middlewares=express-api-auth"
+      - "traefik.http.middlewares.express-api-auth.basicauth.usersfile=/users/raph.u" # htaccess
+    networks:
+      - traefik
+
+  proxy:
+    image: traefik:latest
+    container_name: "traefik"
+    networks:
+      - traefik
+    ports:
+      - "80:80" # HTTP
+      - "443:443" # HTTPS
+      # Epitech
+      # Je pourrais utiliser un port privilégié pour certaine utilisation, mais le 443 est pas mal
+    volumes:
+      # Pour gérer les certificats
+      - ./letsencrypt:/letsencrypt
+      # Poure charger la config de l'api
+      - ./dynamic.yml:/dynamic.yml
+      # Pour faire le htaccess
+      - ./users.u:/users.u
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+    command:
+      #- "--log.level=DEBUG"
+      # Docker configuration
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=traefik"
+      # Configure entrypoint
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      # SSL configuration
+      - "--certificatesresolvers.letsencryptresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencryptresolver.acme.httpchallenge.entrypoint=web"
+      #- "--certificatesresolvers.letsencryptresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.letsencryptresolver.acme.email=thibaut.raphael@protonmail.com"
+      - "--certificatesresolvers.letsencryptresolver.acme.storage=/letsencrypt/acme.json"
+      # Global HTTP -> HTTPS
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+
+      # Express API
+      - "--providers.file.filename=/dynamic.yml"
+      # Enable dashboard
+      - "--api.dashboard=true"
+    labels:
+      - "traefik.enable=true"
+      # Configuration Dashboard
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencryptresolver"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      # - "traefik.http.routers.dashboard.middlewares=dashboard-auth"
+      # - "traefik.http.middlewares.dashboard-auth.basicauth.usersfile=/users/users.u" # htaccess
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.musubi.dev`)"
+      - "traefik.http.services.dashboard.loadbalancer.server.port=8080"
+      # WatchTower auto update
+      # TODO: Check for non interrupting update
+      - "com.centurylinklabs.watchtower.enable=true"
+
+networks:
+  traefik:
+    external: true # Utiliser ce network pour rendre un service accessible sur publiquement
+  internal:
+    external: false # Utiliser ce network pour faire communiquer les services entre eux de manière interne
