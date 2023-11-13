@@ -1,5 +1,4 @@
 ---
+sidebar_position: 2
 title: Technical documentation
-upload_file: d
 ---
-d﻿e
