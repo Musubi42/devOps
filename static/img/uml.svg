@@ -1,0 +1,562 @@
+<svg version="1.1" baseProfile="full" width="3311.3" height="1563.0" viewbox="0 0 3311.25 1563" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+<desc >#.interface: fill=lightblue
+#.enumeration: fill=lightgreen
+#.type: fill=lightgray
+[AuthenticationController||\#register(): Promise&lt;string \| { error: any; }&gt;]
+[ControllerHelper]&lt;:-[AuthenticationController]
+[CartController|+cartManager: CartService|\#addItem(): Promise&lt;void \| { error: any; }&gt;;\#remvoveItem(): Promise&lt;void \| { error: any; }&gt;]
+[ControllerHelper]&lt;:-[CartController]
+[CartController]  -  [CartService]
+[ControllerHelper||\#handleError(): { error: any; }]
+[Controller]&lt;:-[ControllerHelper]
+[PaiementController|+stripeManager: StripeService|\#createCheckoutSession(): Promise&lt;{ message: string; ephemeralKey: string; checkoutSession: string; }&gt;]
+[Controller]&lt;:-[PaiementController]
+[PaiementController]  -  [StripeService]
+[UserController|+usersManager: UsersService|\#register(): Promise&lt;{ userId: string; token: string; } \| { error: any; }&gt;;\#disableUser(): Promise&lt;void \| { error: any; }&gt;;\#enableUser(): Promise&lt;void \| { error: any; }&gt;;\#updateUser(): Promise&lt;void \| { error: any; }&gt;]
+[ControllerHelper]&lt;:-[UserController]
+[UserController]  -  [UsersService]
+[&lt;type&gt;Cart|+id: number;+items: Product\[\]|]
+[&lt;type&gt;CartDto|+id: number;+items: { product: ProductDto; quantity: number; }\[\];+totalAmount: number|]
+[Cart]  - 0..* [Product]
+[&lt;type&gt;Product|+id: string;+name: string;+description: string \| null;+priceId: string;+price: number \| null;+barcode: string|]
+[&lt;interface&gt;User|+username: string;+email: string;+firstname: string;+lastname: string|]
+[&lt;type&gt;UserUpdate|+username: string;+firstname: string;+lastname: string;+password?: string|]
+[&lt;type&gt;UserJWT|+name: string;+email: string;+user_id: string|]
+[CartService|+instance: CartService \| null;+firebase: FirebaseService;+productsManager: ProductService|\#getInstance(): CartService;\#addToCart(): Promise&lt;void&gt;;\#removeFromCart(): Promise&lt;void&gt;]
+[CartService]  -  [CartService]
+[CartService]  -  [FirebaseService]
+[CartService]  -  [ProductService]
+[FirebaseService|+instance: FirebaseService \| null;\#admin: typeof import(&quot;D:/Downloads/Cours/Cash Manager/API/API/node_modules/firebase-admin/lib/default-namespace&quot;);\#auth: Auth;\#database: Database|\#getInstance(): FirebaseService]
+[FirebaseService]  -  [FirebaseService]
+[ProductService|+instance: ProductService \| null;+stripeManager: StripeService;+timerUpdateProduct: Timeout \| null;+firebase: FirebaseService|\#getInstance(): ProductService;+updateProduct(): Promise&lt;void&gt;;\#getProductFromBarcode(): Promise&lt;string \| undefined&gt;;\#getProductPrice(): Promise&lt;undefined&gt;;\#getProductsPrice(): Promise&lt;never\[\]&gt;]
+[ProductService]  -  [ProductService]
+[ProductService]  -  [StripeService]
+[ProductService]  -  [FirebaseService]
+[StripeService|+instance: StripeService \| null|\#getInstance(): StripeService;\#getProducts(): Promise&lt;Product\[\]&gt;;\#getPrices(): Promise&lt;Price\[\]&gt;;\#createCustomer(): Promise&lt;Response&lt;Customer&gt;&gt;;\#disableUser(): Promise&lt;Response&lt;Customer&gt;&gt;;\#enableUser(): Promise&lt;Response&lt;Customer&gt;&gt;;\#updateUser(): Promise&lt;Response&lt;Customer&gt;&gt;;\#createCheckoutSession(): Promise&lt;{ ephemeralKey: Response&lt;EphemeralKey&gt;; session: Response&lt;Session&gt;; }&gt;]
+[StripeService]  -  [StripeService]
+[UsersService|+instance: UsersService \| null;+stripeManager: StripeService;+firebase: FirebaseService|\#getInstance(): UsersService;\#createUser(): Promise&lt;{ userId: string; token: string; }&gt;;+createUserInFirebase(): Promise&lt;UserRecord&gt;;+createCustomerInStripe(): Promise&lt;Customer&gt;;+createUserInDatabase(): Promise&lt;void&gt;;+createToken(): Promise&lt;string&gt;;\#disableUser(): Promise&lt;void&gt;;+disableUserFromDatabase(): Promise&lt;UserFirebase&gt;;+disableUserFromFirebase(): Promise&lt;void&gt;;+disableUserFromStripe(): Promise&lt;void&gt;;\#enableUser(): Promise&lt;void&gt;;+enableUserInDatabase(): Promise&lt;UserFirebase&gt;;+enableUserInStripe(): Promise&lt;void&gt;;+enableUserInFirebase(): Promise&lt;void&gt;;\#updateUser(): Promise&lt;void&gt;;+updateUserInFirebase(): Promise&lt;void&gt;;+updateUserInDatabase(): Promise&lt;UserFirebase&gt;;+updateUserInStripe(): Promise&lt;void&gt;;\#getCart(): Promise&lt;UserFirebase&gt;;\#getCustomerId(): Promise&lt;string&gt;]
+[UsersService]  -  [UsersService]
+[UsersService]  -  [StripeService]
+[UsersService]  -  [FirebaseService]</desc>
+<g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="normal" font-style="normal">
+<g font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" stroke-width="3.0" stroke-linejoin="round" stroke-linecap="round" stroke="#33322E">
+<g stroke="transparent" fill="transparent">
+<rect x="0.0" y="0.0" height="1563.0" width="3311.3" stroke="none"></rect>
+</g>
+<g transform="translate(8, 8)" fill="#33322E">
+<g transform="translate(20, 20)" fill="#33322E" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal">
+<path d="M421.5 273.2 L164.5 335 L164.5 381.5 L164.5 381.5 " fill="none"></path>
+<path d="M422.8 278.3 L421.5 273.2 L420.3 268.0 L434.5 270.0 Z"></path>
+<path d="M549.0 298.3 L549 335 L549 355 L549.0 355.0 " fill="none"></path>
+<path d="M554.3 298.3 L549.0 298.3 L543.7 298.3 L549.0 285.0 Z"></path>
+<path d="M549.0 493.0 L549 513 L549 570.5 L549.0 570.5 " fill="none"></path>
+<path d="M1217.3 72.0 L549 150 L549 200 L549.0 200.0 " fill="none"></path>
+<path d="M1217.9 77.3 L1217.3 72.0 L1216.6 66.7 L1230.5 70.4 Z"></path>
+<path d="M1336.8 70.8 L2156.75 150 L2156.75 242.5 L2156.75 242.5 L2156.75 335 L2156.75 335 L2156.75 424 L2156.75 424 L2156.75 513 L2156.75 513 L2156.75 647 L2156.75 647 L2156.75 781 L2156.75 781 L2156.75 951 L2156.8 951.0 " fill="none"></path>
+<path d="M1337.3 65.5 L1336.8 70.8 L1336.3 76.1 L1323.5 69.5 Z"></path>
+<path d="M2156.8 1089.0 L2156.75 1259 L1945.5 1311.3002309468823 L1945.5 1311.3 " fill="none"></path>
+<path d="M676.8 253.5 L1619.25 335 L1619.25 424 L1619.25 424 L1619.25 513 L1619.25 513 L1619.25 533 L1619.3 533.0 " fill="none"></path>
+<path d="M677.2 248.2 L676.8 253.5 L676.3 258.9 L663.5 252.4 Z"></path>
+<path d="M1619.3 761.0 L1619.25 781 L1619.25 801 L1619.3 801.0 " fill="none"></path>
+<text x="2274.8" y="162.0" stroke="none">0..*</text>
+<path d="M2309.8 107.5 L2309.75 150 L2309.75 170 L2309.8 170.0 " fill="none"></path>
+<path d="M697.5 621.6 L996.6666666666667 570.5 L1071.4583333333333 570.5 L1071.4583333333333 570.5 L1146.25 647 L1146.25 647 L1071.4583333333333 723.5 L1071.4583333333333 723.5 L996.6666666666667 723.5 L996.6666666666667 723.5 L697.5 672.376582278481 L697.5 672.4 " fill="none"></path>
+<path d="M471.6 723.5 L413.5 781 L413.5 1020 L413.5 1020 L413.5 1259 L413.5 1259 L554.6567164179105 1324 L554.7 1324.0 " fill="none"></path>
+<path d="M626.4 723.5 L684.5 781 L684.5 921 L684.5 921.0 " fill="none"></path>
+<path d="M1195.5 1328.0 L1225.5 1324 L1233 1324 L1233 1324 L1240.5 1393 L1240.5 1393 L1233 1462 L1233 1462 L1225.5 1462 L1225.5 1462 L1195.5 1458.0268714011515 L1195.5 1458.0 " fill="none"></path>
+<path d="M915.5 962.3 L1080.8333333333333 921 L1122.1666666666667 921 L1122.1666666666667 921 L1163.5 1020 L1163.5 1020 L1122.1666666666667 1119 L1122.1666666666667 1119 L1080.8333333333333 1119 L1080.8333333333333 1119 L915.5 1077.7014297729183 L915.5 1077.7 " fill="none"></path>
+<path d="M636.7 1119.0 L569 1259 L1285.5 1350.7448638318203 L1285.5 1350.7 " fill="none"></path>
+<path d="M692.8 1119.0 L704.5 1259 L704.5 1324 L704.5 1324.0 " fill="none"></path>
+<path d="M1945.5 1288.5 L1975.5 1279 L1983 1279 L1983 1279 L1990.5 1393 L1990.5 1393 L1983 1507 L1983 1507 L1975.5 1507 L1975.5 1507 L1945.5 1497.5 L1945.5 1497.5 " fill="none"></path>
+<path d="M1843.3 826.9 L1873.25 801 L1880.75 801 L1880.75 801 L1888.25 1020 L1888.25 1020 L1880.75 1239 L1880.75 1239 L1873.25 1239 L1873.25 1239 L1843.25 1213.1338582677165 L1843.3 1213.1 " fill="none"></path>
+<path d="M1600.9 1239.0 L1599.25 1259 L1601.6753731343283 1279 L1601.7 1279.0 " fill="none"></path>
+<path d="M1843.3 1235.2 L1868 1259 L1195.5 1336.4516544907606 L1195.5 1336.5 " fill="none"></path>
+<g data-name="AuthenticationController">
+<g fill="#eee8d5" stroke="#33322E" data-name="AuthenticationController">
+<rect x="0.0" y="381.5" height="85.0" width="329.0" data-name="AuthenticationController"></rect>
+<path d="M0.0 412.5 L329.0 412.5" fill="none" data-name="AuthenticationController"></path>
+<path d="M0.0 420.5 L329.0 420.5" fill="none" data-name="AuthenticationController"></path>
+</g>
+<g transform="translate(0, 381.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AuthenticationController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AuthenticationController">
+<a id="..\controllers\authentication.controller.ts.AuthenticationController" xlink:href="..\controllers\authentication.controller.ts"><text x="156.5" y="13.5" stroke="none" text-anchor="middle" data-name="AuthenticationController">AuthenticationController</text></a>
+
+</g>
+</g>
+<g transform="translate(0, 412.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AuthenticationController">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AuthenticationController">
+
+</g>
+</g>
+<g transform="translate(0, 420.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AuthenticationController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AuthenticationController">
+<text x="0.0" y="13.5" stroke="none" data-name="AuthenticationController">#register(): Promise&lt;string | { error: any</text>
+<text x="0.0" y="28.5" stroke="none" data-name="AuthenticationController">}&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="ControllerHelper">
+<g fill="#eee8d5" stroke="#33322E" data-name="ControllerHelper">
+<rect x="434.5" y="200.0" height="85.0" width="229.0" data-name="ControllerHelper"></rect>
+<path d="M434.5 231.0 L663.5 231.0" fill="none" data-name="ControllerHelper"></path>
+<path d="M434.5 239.0 L663.5 239.0" fill="none" data-name="ControllerHelper"></path>
+</g>
+<g transform="translate(434.5, 200)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ControllerHelper">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ControllerHelper">
+<a id="..\controllers\helper.controller.ts.ControllerHelper" xlink:href="..\controllers\helper.controller.ts"><text x="106.5" y="13.5" stroke="none" text-anchor="middle" data-name="ControllerHelper">ControllerHelper</text></a>
+
+</g>
+</g>
+<g transform="translate(434.5, 231)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ControllerHelper">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ControllerHelper">
+
+</g>
+</g>
+<g transform="translate(434.5, 239)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ControllerHelper">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ControllerHelper">
+<text x="0.0" y="13.5" stroke="none" data-name="ControllerHelper">#handleError(): { error: any</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ControllerHelper">}</text>
+
+</g>
+</g>
+</g>
+<g data-name="CartController">
+<g fill="#eee8d5" stroke="#33322E" data-name="CartController">
+<rect x="369.0" y="355.0" height="138.0" width="360.0" data-name="CartController"></rect>
+<path d="M369.0 386.0 L729.0 386.0" fill="none" data-name="CartController"></path>
+<path d="M369.0 417.0 L729.0 417.0" fill="none" data-name="CartController"></path>
+</g>
+<g transform="translate(369, 355)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="CartController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="CartController">
+<a id="..\controllers\cart.controller.ts.CartController" xlink:href="..\controllers\cart.controller.ts"><text x="172.0" y="13.5" stroke="none" text-anchor="middle" data-name="CartController">CartController</text></a>
+
+</g>
+</g>
+<g transform="translate(369, 386)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CartController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CartController">
+<text x="0.0" y="13.5" stroke="none" data-name="CartController">+cartManager: CartService</text>
+
+</g>
+</g>
+<g transform="translate(369, 417)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CartController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CartController">
+<text x="0.0" y="13.5" stroke="none" data-name="CartController">#addItem(): Promise&lt;void | { error: any</text>
+<text x="0.0" y="28.5" stroke="none" data-name="CartController">}&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="CartController">#remvoveItem(): Promise&lt;void | { error: any</text>
+<text x="0.0" y="58.5" stroke="none" data-name="CartController">}&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="CartService">
+<g fill="#eee8d5" stroke="#33322E" data-name="CartService">
+<rect x="400.5" y="570.5" height="153.0" width="297.0" data-name="CartService"></rect>
+<path d="M400.5 601.5 L697.5 601.5" fill="none" data-name="CartService"></path>
+<path d="M400.5 662.5 L697.5 662.5" fill="none" data-name="CartService"></path>
+</g>
+<g transform="translate(400.5, 570.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="CartService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="CartService">
+<a id="..\services\cart.service.ts.CartService" xlink:href="..\services\cart.service.ts"><text x="140.5" y="13.5" stroke="none" text-anchor="middle" data-name="CartService">CartService</text></a>
+
+</g>
+</g>
+<g transform="translate(400.5, 601.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CartService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CartService">
+<text x="0.0" y="13.5" stroke="none" data-name="CartService">+instance: CartService | null</text>
+<text x="0.0" y="28.5" stroke="none" data-name="CartService">+firebase: FirebaseService</text>
+<text x="0.0" y="43.5" stroke="none" data-name="CartService">+productsManager: ProductService</text>
+
+</g>
+</g>
+<g transform="translate(400.5, 662.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CartService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CartService">
+<text x="0.0" y="13.5" stroke="none" data-name="CartService">#getInstance(): CartService</text>
+<text x="0.0" y="28.5" stroke="none" data-name="CartService">#addToCart(): Promise&lt;void&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="CartService">#removeFromCart(): Promise&lt;void&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="Controller">
+<g fill="#eee8d5" stroke="#33322E" data-name="Controller">
+<rect x="1230.5" y="49.5" height="31.0" width="93.0" data-name="Controller"></rect>
+</g>
+<g transform="translate(1230.5, 49.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Controller">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Controller">
+<text x="38.5" y="13.5" stroke="none" text-anchor="middle" data-name="Controller">Controller</text>
+
+</g>
+</g>
+</g>
+<g data-name="PaiementController">
+<g fill="#eee8d5" stroke="#33322E" data-name="PaiementController">
+<rect x="1933.3" y="951.0" height="138.0" width="447.0" data-name="PaiementController"></rect>
+<path d="M1933.3 982.0 L2380.3 982.0" fill="none" data-name="PaiementController"></path>
+<path d="M1933.3 1013.0 L2380.3 1013.0" fill="none" data-name="PaiementController"></path>
+</g>
+<g transform="translate(1933.25, 951)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="PaiementController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="PaiementController">
+<a id="..\controllers\payment.controller.ts.PaiementController" xlink:href="..\controllers\payment.controller.ts"><text x="215.5" y="13.5" stroke="none" text-anchor="middle" data-name="PaiementController">PaiementController</text></a>
+
+</g>
+</g>
+<g transform="translate(1933.25, 982)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PaiementController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="PaiementController">
+<text x="0.0" y="13.5" stroke="none" data-name="PaiementController">+stripeManager: StripeService</text>
+
+</g>
+</g>
+<g transform="translate(1933.25, 1013)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PaiementController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="PaiementController">
+<text x="0.0" y="13.5" stroke="none" data-name="PaiementController">#createCheckoutSession(): Promise&lt;{ message: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="PaiementController">ephemeralKey: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="PaiementController">checkoutSession: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="PaiementController">}&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="StripeService">
+<g fill="#eee8d5" stroke="#33322E" data-name="StripeService">
+<rect x="1285.5" y="1279.0" height="228.0" width="660.0" data-name="StripeService"></rect>
+<path d="M1285.5 1310.0 L1945.5 1310.0" fill="none" data-name="StripeService"></path>
+<path d="M1285.5 1341.0 L1945.5 1341.0" fill="none" data-name="StripeService"></path>
+</g>
+<g transform="translate(1285.5, 1279)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="StripeService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="StripeService">
+<a id="..\services\stripe.service.ts.StripeService" xlink:href="..\services\stripe.service.ts"><text x="322.0" y="13.5" stroke="none" text-anchor="middle" data-name="StripeService">StripeService</text></a>
+
+</g>
+</g>
+<g transform="translate(1285.5, 1310)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="StripeService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="StripeService">
+<text x="0.0" y="13.5" stroke="none" data-name="StripeService">+instance: StripeService | null</text>
+
+</g>
+</g>
+<g transform="translate(1285.5, 1341)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="StripeService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="StripeService">
+<text x="0.0" y="13.5" stroke="none" data-name="StripeService">#getInstance(): StripeService</text>
+<text x="0.0" y="28.5" stroke="none" data-name="StripeService">#getProducts(): Promise&lt;Product[]&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="StripeService">#getPrices(): Promise&lt;Price[]&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="StripeService">#createCustomer(): Promise&lt;Response&lt;Customer&gt;&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="StripeService">#disableUser(): Promise&lt;Response&lt;Customer&gt;&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="StripeService">#enableUser(): Promise&lt;Response&lt;Customer&gt;&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="StripeService">#updateUser(): Promise&lt;Response&lt;Customer&gt;&gt;</text>
+<text x="0.0" y="118.5" stroke="none" data-name="StripeService">#createCheckoutSession(): Promise&lt;{ ephemeralKey: Response&lt;EphemeralKey&gt;</text>
+<text x="0.0" y="133.5" stroke="none" data-name="StripeService">session: Response&lt;Session&gt;</text>
+<text x="0.0" y="148.5" stroke="none" data-name="StripeService">}&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="UserController">
+<g fill="#eee8d5" stroke="#33322E" data-name="UserController">
+<rect x="1443.3" y="533.0" height="228.0" width="352.0" data-name="UserController"></rect>
+<path d="M1443.3 564.0 L1795.3 564.0" fill="none" data-name="UserController"></path>
+<path d="M1443.3 595.0 L1795.3 595.0" fill="none" data-name="UserController"></path>
+</g>
+<g transform="translate(1443.25, 533)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="UserController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="UserController">
+<a id="..\controllers\user.controller.ts.UserController" xlink:href="..\controllers\user.controller.ts"><text x="168.0" y="13.5" stroke="none" text-anchor="middle" data-name="UserController">UserController</text></a>
+
+</g>
+</g>
+<g transform="translate(1443.25, 564)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UserController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UserController">
+<text x="0.0" y="13.5" stroke="none" data-name="UserController">+usersManager: UsersService</text>
+
+</g>
+</g>
+<g transform="translate(1443.25, 595)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UserController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UserController">
+<text x="0.0" y="13.5" stroke="none" data-name="UserController">#register(): Promise&lt;{ userId: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="UserController">token: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="UserController">} | { error: any</text>
+<text x="0.0" y="58.5" stroke="none" data-name="UserController">}&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="UserController">#disableUser(): Promise&lt;void | { error: any</text>
+<text x="0.0" y="88.5" stroke="none" data-name="UserController">}&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="UserController">#enableUser(): Promise&lt;void | { error: any</text>
+<text x="0.0" y="118.5" stroke="none" data-name="UserController">}&gt;</text>
+<text x="0.0" y="133.5" stroke="none" data-name="UserController">#updateUser(): Promise&lt;void | { error: any</text>
+<text x="0.0" y="148.5" stroke="none" data-name="UserController">}&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="UsersService">
+<g fill="#eee8d5" stroke="#33322E" data-name="UsersService">
+<rect x="1395.3" y="801.0" height="438.0" width="448.0" data-name="UsersService"></rect>
+<path d="M1395.3 832.0 L1843.3 832.0" fill="none" data-name="UsersService"></path>
+<path d="M1395.3 893.0 L1843.3 893.0" fill="none" data-name="UsersService"></path>
+</g>
+<g transform="translate(1395.25, 801)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="UsersService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="UsersService">
+<a id="..\services\users.service.ts.UsersService" xlink:href="..\services\users.service.ts"><text x="216.0" y="13.5" stroke="none" text-anchor="middle" data-name="UsersService">UsersService</text></a>
+
+</g>
+</g>
+<g transform="translate(1395.25, 832)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UsersService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UsersService">
+<text x="0.0" y="13.5" stroke="none" data-name="UsersService">+instance: UsersService | null</text>
+<text x="0.0" y="28.5" stroke="none" data-name="UsersService">+stripeManager: StripeService</text>
+<text x="0.0" y="43.5" stroke="none" data-name="UsersService">+firebase: FirebaseService</text>
+
+</g>
+</g>
+<g transform="translate(1395.25, 893)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UsersService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UsersService">
+<text x="0.0" y="13.5" stroke="none" data-name="UsersService">#getInstance(): UsersService</text>
+<text x="0.0" y="28.5" stroke="none" data-name="UsersService">#createUser(): Promise&lt;{ userId: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="UsersService">token: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="UsersService">}&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="UsersService">+createUserInFirebase(): Promise&lt;UserRecord&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="UsersService">+createCustomerInStripe(): Promise&lt;Customer&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="UsersService">+createUserInDatabase(): Promise&lt;void&gt;</text>
+<text x="0.0" y="118.5" stroke="none" data-name="UsersService">+createToken(): Promise&lt;string&gt;</text>
+<text x="0.0" y="133.5" stroke="none" data-name="UsersService">#disableUser(): Promise&lt;void&gt;</text>
+<text x="0.0" y="148.5" stroke="none" data-name="UsersService">+disableUserFromDatabase(): Promise&lt;UserFirebase&gt;</text>
+<text x="0.0" y="163.5" stroke="none" data-name="UsersService">+disableUserFromFirebase(): Promise&lt;void&gt;</text>
+<text x="0.0" y="178.5" stroke="none" data-name="UsersService">+disableUserFromStripe(): Promise&lt;void&gt;</text>
+<text x="0.0" y="193.5" stroke="none" data-name="UsersService">#enableUser(): Promise&lt;void&gt;</text>
+<text x="0.0" y="208.5" stroke="none" data-name="UsersService">+enableUserInDatabase(): Promise&lt;UserFirebase&gt;</text>
+<text x="0.0" y="223.5" stroke="none" data-name="UsersService">+enableUserInStripe(): Promise&lt;void&gt;</text>
+<text x="0.0" y="238.5" stroke="none" data-name="UsersService">+enableUserInFirebase(): Promise&lt;void&gt;</text>
+<text x="0.0" y="253.5" stroke="none" data-name="UsersService">#updateUser(): Promise&lt;void&gt;</text>
+<text x="0.0" y="268.5" stroke="none" data-name="UsersService">+updateUserInFirebase(): Promise&lt;void&gt;</text>
+<text x="0.0" y="283.5" stroke="none" data-name="UsersService">+updateUserInDatabase(): Promise&lt;UserFirebase&gt;</text>
+<text x="0.0" y="298.5" stroke="none" data-name="UsersService">+updateUserInStripe(): Promise&lt;void&gt;</text>
+<text x="0.0" y="313.5" stroke="none" data-name="UsersService">#getCart(): Promise&lt;UserFirebase&gt;</text>
+<text x="0.0" y="328.5" stroke="none" data-name="UsersService">#getCustomerId(): Promise&lt;string&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="Cart">
+<g fill="lightgray" stroke="#33322E" data-name="Cart">
+<rect x="2235.3" y="22.5" height="85.0" width="149.0" data-name="Cart"></rect>
+<path d="M2235.3 53.5 L2384.3 53.5" fill="none" data-name="Cart"></path>
+<path d="M2235.3 99.5 L2384.3 99.5" fill="none" data-name="Cart"></path>
+</g>
+<g transform="translate(2235.25, 22.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Cart">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Cart">
+<a id="..\models\cart.ts.Cart" xlink:href="..\models\cart.ts"><text x="66.5" y="13.5" stroke="none" text-anchor="middle" data-name="Cart">Cart</text></a>
+
+</g>
+</g>
+<g transform="translate(2235.25, 53.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Cart">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Cart">
+<text x="0.0" y="13.5" stroke="none" data-name="Cart">+id: number</text>
+<text x="0.0" y="28.5" stroke="none" data-name="Cart">+items: Product[]</text>
+
+</g>
+</g>
+<g transform="translate(2235.25, 99.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Cart">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Cart">
+
+</g>
+</g>
+</g>
+<g data-name="CartDto">
+<g fill="lightgray" stroke="#33322E" data-name="CartDto">
+<rect x="2424.3" y="0.0" height="130.0" width="247.0" data-name="CartDto"></rect>
+<path d="M2424.3 31.0 L2671.3 31.0" fill="none" data-name="CartDto"></path>
+<path d="M2424.3 122.0 L2671.3 122.0" fill="none" data-name="CartDto"></path>
+</g>
+<g transform="translate(2424.25, 0)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CartDto">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="CartDto">
+<a id="..\models\cart.ts.CartDto" xlink:href="..\models\cart.ts"><text x="115.5" y="13.5" stroke="none" text-anchor="middle" data-name="CartDto">CartDto</text></a>
+
+</g>
+</g>
+<g transform="translate(2424.25, 31)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CartDto">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CartDto">
+<text x="0.0" y="13.5" stroke="none" data-name="CartDto">+id: number</text>
+<text x="0.0" y="28.5" stroke="none" data-name="CartDto">+items: { product: ProductDto</text>
+<text x="0.0" y="43.5" stroke="none" data-name="CartDto">quantity: number</text>
+<text x="0.0" y="58.5" stroke="none" data-name="CartDto">}[]</text>
+<text x="0.0" y="73.5" stroke="none" data-name="CartDto">+totalAmount: number</text>
+
+</g>
+</g>
+<g transform="translate(2424.25, 122)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CartDto">
+<g transform="translate(8, 8)" fill="#33322E" data-name="CartDto">
+
+</g>
+</g>
+</g>
+<g data-name="Product">
+<g fill="lightgray" stroke="#33322E" data-name="Product">
+<rect x="2204.8" y="170.0" height="145.0" width="210.0" data-name="Product"></rect>
+<path d="M2204.8 201.0 L2414.8 201.0" fill="none" data-name="Product"></path>
+<path d="M2204.8 307.0 L2414.8 307.0" fill="none" data-name="Product"></path>
+</g>
+<g transform="translate(2204.75, 170)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Product">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Product">
+<a id="..\models\product.ts.Product" xlink:href="..\models\product.ts"><text x="97.0" y="13.5" stroke="none" text-anchor="middle" data-name="Product">Product</text></a>
+
+</g>
+</g>
+<g transform="translate(2204.75, 201)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Product">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Product">
+<text x="0.0" y="13.5" stroke="none" data-name="Product">+id: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="Product">+name: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="Product">+description: string | null</text>
+<text x="0.0" y="58.5" stroke="none" data-name="Product">+priceId: string</text>
+<text x="0.0" y="73.5" stroke="none" data-name="Product">+price: number | null</text>
+<text x="0.0" y="88.5" stroke="none" data-name="Product">+barcode: string</text>
+
+</g>
+</g>
+<g transform="translate(2204.75, 307)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Product">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Product">
+
+</g>
+</g>
+</g>
+<g data-name="User">
+<g fill="lightblue" stroke="#33322E" data-name="User">
+<rect x="2711.3" y="7.5" height="115.0" width="159.0" data-name="User"></rect>
+<path d="M2711.3 38.5 L2870.3 38.5" fill="none" data-name="User"></path>
+<path d="M2711.3 114.5 L2870.3 114.5" fill="none" data-name="User"></path>
+</g>
+<g transform="translate(2711.25, 7.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="User">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="User">
+<a id="..\models\user.ts.User" xlink:href="..\models\user.ts"><text x="71.5" y="13.5" stroke="none" text-anchor="middle" data-name="User">User</text></a>
+
+</g>
+</g>
+<g transform="translate(2711.25, 38.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="User">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="User">
+<text x="0.0" y="13.5" stroke="none" data-name="User">+username: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="User">+email: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="User">+firstname: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="User">+lastname: string</text>
+
+</g>
+</g>
+<g transform="translate(2711.25, 114.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="User">
+<g transform="translate(8, 8)" fill="#33322E" data-name="User">
+
+</g>
+</g>
+</g>
+<g data-name="UserUpdate">
+<g fill="lightgray" stroke="#33322E" data-name="UserUpdate">
+<rect x="2910.3" y="7.5" height="115.0" width="166.0" data-name="UserUpdate"></rect>
+<path d="M2910.3 38.5 L3076.3 38.5" fill="none" data-name="UserUpdate"></path>
+<path d="M2910.3 114.5 L3076.3 114.5" fill="none" data-name="UserUpdate"></path>
+</g>
+<g transform="translate(2910.25, 7.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UserUpdate">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="UserUpdate">
+<a id="..\models\user.ts.UserUpdate" xlink:href="..\models\user.ts"><text x="75.0" y="13.5" stroke="none" text-anchor="middle" data-name="UserUpdate">UserUpdate</text></a>
+
+</g>
+</g>
+<g transform="translate(2910.25, 38.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UserUpdate">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UserUpdate">
+<text x="0.0" y="13.5" stroke="none" data-name="UserUpdate">+username: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="UserUpdate">+firstname: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="UserUpdate">+lastname: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="UserUpdate">+password?: string</text>
+
+</g>
+</g>
+<g transform="translate(2910.25, 114.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UserUpdate">
+<g transform="translate(8, 8)" fill="#33322E" data-name="UserUpdate">
+
+</g>
+</g>
+</g>
+<g data-name="UserJWT">
+<g fill="lightgray" stroke="#33322E" data-name="UserJWT">
+<rect x="3116.3" y="15.0" height="100.0" width="139.0" data-name="UserJWT"></rect>
+<path d="M3116.3 46.0 L3255.3 46.0" fill="none" data-name="UserJWT"></path>
+<path d="M3116.3 107.0 L3255.3 107.0" fill="none" data-name="UserJWT"></path>
+</g>
+<g transform="translate(3116.25, 15)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UserJWT">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="UserJWT">
+<a id="..\models\user.ts.UserJWT" xlink:href="..\models\user.ts"><text x="61.5" y="13.5" stroke="none" text-anchor="middle" data-name="UserJWT">UserJWT</text></a>
+
+</g>
+</g>
+<g transform="translate(3116.25, 46)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UserJWT">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UserJWT">
+<text x="0.0" y="13.5" stroke="none" data-name="UserJWT">+name: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="UserJWT">+email: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="UserJWT">+user_id: string</text>
+
+</g>
+</g>
+<g transform="translate(3116.25, 107)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UserJWT">
+<g transform="translate(8, 8)" fill="#33322E" data-name="UserJWT">
+
+</g>
+</g>
+</g>
+<g data-name="FirebaseService">
+<g fill="#eee8d5" stroke="#33322E" data-name="FirebaseService">
+<rect x="213.5" y="1324.0" height="138.0" width="982.0" data-name="FirebaseService"></rect>
+<path d="M213.5 1355.0 L1195.5 1355.0" fill="none" data-name="FirebaseService"></path>
+<path d="M213.5 1431.0 L1195.5 1431.0" fill="none" data-name="FirebaseService"></path>
+</g>
+<g transform="translate(213.5, 1324)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="FirebaseService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="FirebaseService">
+<a id="..\services\firebase.service.ts.FirebaseService" xlink:href="..\services\firebase.service.ts"><text x="483.0" y="13.5" stroke="none" text-anchor="middle" data-name="FirebaseService">FirebaseService</text></a>
+
+</g>
+</g>
+<g transform="translate(213.5, 1355)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="FirebaseService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="FirebaseService">
+<text x="0.0" y="13.5" stroke="none" data-name="FirebaseService">+instance: FirebaseService | null</text>
+<text x="0.0" y="28.5" stroke="none" data-name="FirebaseService">#admin: typeof import(&quot;D:/Downloads/Cours/Cash Manager/API/API/node_modules/firebase-admin/lib/default-namespace&quot;)</text>
+<text x="0.0" y="43.5" stroke="none" data-name="FirebaseService">#auth: Auth</text>
+<text x="0.0" y="58.5" stroke="none" data-name="FirebaseService">#database: Database</text>
+
+</g>
+</g>
+<g transform="translate(213.5, 1431)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="FirebaseService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="FirebaseService">
+<text x="0.0" y="13.5" stroke="none" data-name="FirebaseService">#getInstance(): FirebaseService</text>
+
+</g>
+</g>
+</g>
+<g data-name="ProductService">
+<g fill="#eee8d5" stroke="#33322E" data-name="ProductService">
+<rect x="453.5" y="921.0" height="198.0" width="462.0" data-name="ProductService"></rect>
+<path d="M453.5 952.0 L915.5 952.0" fill="none" data-name="ProductService"></path>
+<path d="M453.5 1028.0 L915.5 1028.0" fill="none" data-name="ProductService"></path>
+</g>
+<g transform="translate(453.5, 921)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ProductService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ProductService">
+<a id="..\services\products.service.ts.ProductService" xlink:href="..\services\products.service.ts"><text x="223.0" y="13.5" stroke="none" text-anchor="middle" data-name="ProductService">ProductService</text></a>
+
+</g>
+</g>
+<g transform="translate(453.5, 952)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ProductService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ProductService">
+<text x="0.0" y="13.5" stroke="none" data-name="ProductService">+instance: ProductService | null</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ProductService">+stripeManager: StripeService</text>
+<text x="0.0" y="43.5" stroke="none" data-name="ProductService">+timerUpdateProduct: Timeout | null</text>
+<text x="0.0" y="58.5" stroke="none" data-name="ProductService">+firebase: FirebaseService</text>
+
+</g>
+</g>
+<g transform="translate(453.5, 1028)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ProductService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ProductService">
+<text x="0.0" y="13.5" stroke="none" data-name="ProductService">#getInstance(): ProductService</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ProductService">+updateProduct(): Promise&lt;void&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="ProductService">#getProductFromBarcode(): Promise&lt;string | undefined&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="ProductService">#getProductPrice(): Promise&lt;undefined&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="ProductService">#getProductsPrice(): Promise&lt;never[]&gt;</text>
+
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>
