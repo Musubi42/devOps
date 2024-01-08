@@ -9,13 +9,15 @@ const FRAME_STYLE = {
  *
  * @prop story The story ID in the URL to navigate to
  */
-export default Iframe ({ iframeURL = '' }) => (
-  <iframe
-    title="Excalibur Storybook Example"
-    src={`${iframeURL}`}
-    frameBorder={0}
-    width="100%"
-    height="600"
-    style={FRAME_STYLE}
-  ></iframe>
-)
+export default Iframe = ({ iframeURL = '' }) => {
+  return (
+    <iframe
+      title="Excalibur Storybook Example"
+      src={`${iframeURL}`}
+      frameBorder={0}
+      width="100%"
+      height="600"
+      style={FRAME_STYLE}
+    ></iframe>
+  );
+}
