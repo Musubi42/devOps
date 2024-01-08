@@ -9,7 +9,7 @@ const FRAME_STYLE = {
  *
  * @prop story The story ID in the URL to navigate to
  */
-export default ({ iframeURL = '' }) => (
+export default Iframe ({ iframeURL = '' }) => (
   <iframe
     title="Excalibur Storybook Example"
     src={`${iframeURL}`}
