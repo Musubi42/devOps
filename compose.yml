@@ -1,0 +1,128 @@
+services:
+  postgres:
+    image: ${NEXTCLOUD_POSTGRES_IMAGE_TAG}
+    volumes:
+      # - nextcloud-postgres:/var/lib/postgresql/data
+      - ./volumes/nextcloud-postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${NEXTCLOUD_DB_NAME}
+      POSTGRES_USER: ${NEXTCLOUD_DB_USER}
+      POSTGRES_PASSWORD: ${NEXTCLOUD_DB_PASSWORD}
+    networks:
+      - nextcloud
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "${NEXTCLOUD_DB_NAME}", "-U", "${NEXTCLOUD_DB_USER}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  redis:
+    image: ${NEXTCLOUD_REDIS_IMAGE_TAG}
+    command: ["redis-server", "--requirepass", "$NEXTCLOUD_REDIS_PASSWORD"]
+    volumes:
+      # - redis-data:/data
+      - ./volumes/redis-data:/data
+    networks:
+      - nextcloud
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  nextcloud:
+    image: ${NEXTCLOUD_IMAGE_TAG}
+    volumes:
+      # - nextcloud-data:${DATA_PATH}
+      - ./volumes/nextcloud-data:${DATA_PATH}
+    environment:
+      TZ: ${NEXTCLOUD_TIMEZONE}
+      POSTGRES_HOST: postgres
+      DB_PORT: 5432
+      POSTGRES_DB: ${NEXTCLOUD_DB_NAME}
+      POSTGRES_USER: ${NEXTCLOUD_DB_USER}
+      POSTGRES_PASSWORD: ${NEXTCLOUD_DB_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_HOST_PORT: 6379
+      REDIS_HOST_PASSWORD: ${NEXTCLOUD_REDIS_PASSWORD}
+      NEXTCLOUD_ADMIN_USER: ${NEXTCLOUD_ADMIN_USERNAME}
+      NEXTCLOUD_ADMIN_PASSWORD: ${NEXTCLOUD_ADMIN_PASSWORD}
+      NEXTCLOUD_TRUSTED_DOMAINS: ${NEXTCLOUD_HOSTNAME}
+      TRUSTED_PROXIES: ${NEXTCLOUD_HOSTNAME}
+      OVERWRITECLIURL: ${NEXTCLOUD_URL}
+      OVERWRITEPROTOCOL: https
+      OVERWRITEHOST: ${NEXTCLOUD_HOSTNAME}
+    networks:
+      - nextcloud
+      - traefik
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 90s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloud.rule=Host(`${NEXTCLOUD_HOSTNAME}`)"
+      - "traefik.http.routers.nextcloud.service=nextcloud"
+      - "traefik.http.routers.nextcloud.entrypoints=websecure"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
+      - "traefik.http.routers.nextcloud.tls=true"
+      - "traefik.http.routers.nextcloud.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.nextcloud.loadbalancer.passhostheader=true"
+      - "traefik.http.routers.nextcloud.middlewares=compresstraefik"
+      - "traefik.http.middlewares.compresstraefik.compress=true"
+      - "traefik.docker.network=traefik"
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  collabora:
+    image: collabora/code:22.05.10.1.1
+    container_name: collabora
+    restart: unless-stopped
+    networks:
+      - traefik
+    environment:
+      # https://sdk.collaboraonline.com/docs/installation/CODE_Docker_image.html
+      # - aliasgroup1=${NEXTCLOUD1}
+      # - aliasgroup2=${NEXTCLOUD2}
+      # - aliasgroup3=${NEXTCLOUD3}
+      - dictionaries=de_DE en_US es_ES ru
+      - VIRTUAL_PROTO=http
+      - VIRTUAL_PORT=9980
+      - VIRTUAL_HOST=collabora.musubi.dev
+      - extra_params=--o:ssl.enable=false --o:ssl.termination=true --o:user_interface.mode=compact --o:net.proto=IPv4 --o:hexify_embedded_urls=true --o:logging.level=warning
+      - username=musubi
+      - password=sniperking
+    cap_add:
+      - MKNOD
+    tty: true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - traefik.http.routers.collabora.entrypoints=websecure
+      - traefik.http.routers.collabora.rule=Host(`${COLLABORA_HOSTNAME}`)
+      - traefik.http.routers.collabora.tls=true
+      - traefik.http.routers.collabora.tls.certresolver=letsencryptresolver
+      - traefik.passHostHeader=true
+      - traefik.http.routers.collabora.middlewares=secHeaders3@file
+      - traefik.http.services.collabora.loadbalancer.server.port=9980
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+  
+
+networks:
+  nextcloud:
+    external: true
+  traefik:
+    external: true
+
