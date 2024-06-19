@@ -11,7 +11,7 @@ services:
     # /opt/monorepo
     # ln -s /opt/monorepo /opt/stacks/monorepo
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./data:/app/data
+      - ./volumes/data:/app/data
       - /opt/stacks:/opt/stacks
     networks:
       - traefik
