@@ -1,0 +1,25 @@
+services:
+  homarr:
+    container_name: oim-homarr
+    image: ghcr.io/ajnart/homarr:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
+      - ./volumes/configs:/app/data/configs
+      - ./volumes/icons:/app/public/icons
+      - ./volumes/data:/data
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homarr.rule=Host(`homarr.musubi.dev`)"
+      - "traefik.http.routers.homarr.entrypoints=websecure"
+      - "traefik.http.routers.homarr.tls=true"
+      - "traefik.http.routers.homarr.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.homarr.loadbalancer.server.port=7575"
+      # TODO: Check for non interrupting update
+      # - ${watchtower_auto_update}
+    restart: unless-stopped
+    
+networks:
+  traefik:
+    external: true
