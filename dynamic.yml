@@ -1,0 +1,53 @@
+http:
+  routers:
+    express-api:
+      rule: "Host(`api.design-gamers.com`)"
+      service: express-api
+      middlewares:
+        - https-redirect@file
+    # pooger-api:
+    #   rule: "Host(`api.pooger.epitech.musubi.dev`)"
+    #   service: 
+    infisical:
+      rule: "Host(`infisical.musubi.dev`) && PathPrefix(`/api`)"
+      service: infisical
+      middlewares:
+        - https-redirect@file
+    donation-api:
+      rule: "Host(`donation-api.roulerpouraider.fr`)"
+      service: donation-api
+      middlewares:
+        - https-redirect@file
+  services:
+    express-api:
+      loadBalancer:
+        servers:
+          - url: "http://express-api:5555"
+    # pooger-api:
+    #   loadBalancer:
+    #     servers:
+    #       - url: "http://pooger-api:4000"
+    infisical:
+      loadBalancer:
+        servers:
+          - url: "http://infisical:8080"
+    donation-api:
+      loadBalancer:
+        servers:
+          - url: "http://donation-api:8081"
+  middlewares:
+    https-redirect:
+      redirectScheme:
+        scheme: "https"
+    my-fail2ban:
+      plugin:
+        fail2ban:
+          blacklist:
+            ip: 192.168.0.0/24
+          rules:
+            bantime: 3h
+            enabled: "true"
+            findtime: 10m
+            maxretry: "4"
+          whitelist:
+            ip: ::1,127.0.0.1
