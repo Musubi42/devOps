@@ -1,0 +1,248 @@
+Chain INPUT (policy DROP 205 packets, 10364 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  21M   25G ufw-before-logging-input  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+  21M   25G ufw-before-input  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+  16M   21G ufw-after-input  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+  16M   21G ufw-after-logging-input  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+  16M   21G ufw-reject-input  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+  16M   21G ufw-track-input  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+62169   29M DOCKER-USER  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+62169   29M DOCKER-ISOLATION-STAGE-1  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+   34  2586 ACCEPT     all  --  *      docker0  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    8   456 DOCKER     all  --  *      docker0  0.0.0.0/0            0.0.0.0/0           
+   42  6802 ACCEPT     all  --  docker0 !docker0  0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     all  --  docker0 docker0  0.0.0.0/0            0.0.0.0/0           
+   40  4040 ACCEPT     all  --  *      br-a884e83ea540  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    0     0 DOCKER     all  --  *      br-a884e83ea540  0.0.0.0/0            0.0.0.0/0           
+   40  2540 ACCEPT     all  --  br-a884e83ea540 !br-a884e83ea540  0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     all  --  br-a884e83ea540 br-a884e83ea540  0.0.0.0/0            0.0.0.0/0           
+4799K 1340M ACCEPT     all  --  *      br-76cba383e1db  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+32136 1928K DOCKER     all  --  *      br-76cba383e1db  0.0.0.0/0            0.0.0.0/0           
+84969   21M ACCEPT     all  --  br-76cba383e1db !br-76cba383e1db  0.0.0.0/0            0.0.0.0/0           
+32136 1928K ACCEPT     all  --  br-76cba383e1db br-76cba383e1db  0.0.0.0/0            0.0.0.0/0           
+  11M 2691M ACCEPT     all  --  *      br-2b2f803e8d76  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+ 487K   29M DOCKER     all  --  *      br-2b2f803e8d76  0.0.0.0/0            0.0.0.0/0           
+ 153K 9134K ACCEPT     all  --  br-2b2f803e8d76 !br-2b2f803e8d76  0.0.0.0/0            0.0.0.0/0           
+ 487K   29M ACCEPT     all  --  br-2b2f803e8d76 br-2b2f803e8d76  0.0.0.0/0            0.0.0.0/0           
+1825K  447M ACCEPT     all  --  *      br-eaedf1d18b62  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+69973 4198K DOCKER     all  --  *      br-eaedf1d18b62  0.0.0.0/0            0.0.0.0/0           
+   10   726 ACCEPT     all  --  br-eaedf1d18b62 !br-eaedf1d18b62  0.0.0.0/0            0.0.0.0/0           
+69973 4198K ACCEPT     all  --  br-eaedf1d18b62 br-eaedf1d18b62  0.0.0.0/0            0.0.0.0/0           
+ 910K  351M ACCEPT     all  --  *      br-08a54edfc694  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+25900 1415K DOCKER     all  --  *      br-08a54edfc694  0.0.0.0/0            0.0.0.0/0           
+ 633K   83M ACCEPT     all  --  br-08a54edfc694 !br-08a54edfc694  0.0.0.0/0            0.0.0.0/0           
+ 2786  167K ACCEPT     all  --  br-08a54edfc694 br-08a54edfc694  0.0.0.0/0            0.0.0.0/0           
+  28M 4227M ACCEPT     all  --  *      br-bac1639be653  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+   75  4500 DOCKER     all  --  *      br-bac1639be653  0.0.0.0/0            0.0.0.0/0           
+5889K  300M ACCEPT     all  --  br-bac1639be653 !br-bac1639be653  0.0.0.0/0            0.0.0.0/0           
+   75  4500 ACCEPT     all  --  br-bac1639be653 br-bac1639be653  0.0.0.0/0            0.0.0.0/0           
+  20M   44G ACCEPT     all  --  *      br-39ea7ed9b13c  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+ 805K   48M DOCKER     all  --  *      br-39ea7ed9b13c  0.0.0.0/0            0.0.0.0/0           
+8469K   11G ACCEPT     all  --  br-39ea7ed9b13c !br-39ea7ed9b13c  0.0.0.0/0            0.0.0.0/0           
+ 560K   34M ACCEPT     all  --  br-39ea7ed9b13c br-39ea7ed9b13c  0.0.0.0/0            0.0.0.0/0           
+    0     0 ufw-before-logging-forward  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 ufw-before-forward  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 ufw-after-forward  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 ufw-after-logging-forward  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 ufw-reject-forward  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 ufw-track-forward  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OUTPUT (policy ACCEPT 1 packets, 118 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  19M   25G ufw-before-logging-output  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+  19M   25G ufw-before-output  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+  14M   21G ufw-after-output  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+  14M   21G ufw-after-logging-output  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+  14M   21G ufw-reject-output  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+  14M   21G ufw-track-output  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain DOCKER (8 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    2    88 ACCEPT     tcp  --  !br-08a54edfc694 br-08a54edfc694  0.0.0.0/0            172.22.0.3           tcp dpt:3306
+    0     0 ACCEPT     tcp  --  !br-39ea7ed9b13c br-39ea7ed9b13c  0.0.0.0/0            172.18.0.4           tcp dpt:4210
+    0     0 ACCEPT     tcp  --  !br-39ea7ed9b13c br-39ea7ed9b13c  0.0.0.0/0            172.18.0.4           tcp dpt:4000
+   24  1456 ACCEPT     tcp  --  !br-39ea7ed9b13c br-39ea7ed9b13c  0.0.0.0/0            172.18.0.4           tcp dpt:443
+   12   692 ACCEPT     tcp  --  !br-39ea7ed9b13c br-39ea7ed9b13c  0.0.0.0/0            172.18.0.4           tcp dpt:80
+    8   456 ACCEPT     tcp  --  !docker0 docker0  0.0.0.0/0            172.17.0.2           tcp dpt:80
+
+Chain DOCKER-ISOLATION-STAGE-1 (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+   42  6802 DOCKER-ISOLATION-STAGE-2  all  --  docker0 !docker0  0.0.0.0/0            0.0.0.0/0           
+    0     0 DOCKER-ISOLATION-STAGE-2  all  --  br-bac1639be653 !br-bac1639be653  0.0.0.0/0            0.0.0.0/0           
+    0     0 DOCKER-ISOLATION-STAGE-2  all  --  br-a884e83ea540 !br-a884e83ea540  0.0.0.0/0            0.0.0.0/0           
+  354 70336 DOCKER-ISOLATION-STAGE-2  all  --  br-76cba383e1db !br-76cba383e1db  0.0.0.0/0            0.0.0.0/0           
+ 3275 2587K DOCKER-ISOLATION-STAGE-2  all  --  br-39ea7ed9b13c !br-39ea7ed9b13c  0.0.0.0/0            0.0.0.0/0           
+    0     0 DOCKER-ISOLATION-STAGE-2  all  --  br-2b2f803e8d76 !br-2b2f803e8d76  0.0.0.0/0            0.0.0.0/0           
+ 1601  234K DOCKER-ISOLATION-STAGE-2  all  --  br-08a54edfc694 !br-08a54edfc694  0.0.0.0/0            0.0.0.0/0           
+    0     0 DOCKER-ISOLATION-STAGE-2  all  --  br-eaedf1d18b62 !br-eaedf1d18b62  0.0.0.0/0            0.0.0.0/0           
+62169   29M RETURN     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain DOCKER-ISOLATION-STAGE-2 (8 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 DROP       all  --  *      docker0  0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  *      br-bac1639be653  0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  *      br-a884e83ea540  0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  *      br-76cba383e1db  0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  *      br-39ea7ed9b13c  0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  *      br-2b2f803e8d76  0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  *      br-08a54edfc694  0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  *      br-eaedf1d18b62  0.0.0.0/0            0.0.0.0/0           
+ 5272 2897K RETURN     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain DOCKER-USER (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+  91M   74G RETURN     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain ufw-after-forward (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-after-input (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 ufw-skip-to-policy-input  udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:137
+    0     0 ufw-skip-to-policy-input  udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:138
+    0     0 ufw-skip-to-policy-input  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:139
+   21  1076 ufw-skip-to-policy-input  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:445
+    0     0 ufw-skip-to-policy-input  udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:67
+    0     0 ufw-skip-to-policy-input  udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+    0     0 ufw-skip-to-policy-input  all  --  *      *       0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type BROADCAST
+
+Chain ufw-after-logging-forward (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 LOG        all  --  *      *       0.0.0.0/0            0.0.0.0/0            limit: avg 3/min burst 10 LOG flags 0 level 4 prefix "[UFW BLOCK] "
+
+Chain ufw-after-logging-input (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+   84  4012 LOG        all  --  *      *       0.0.0.0/0            0.0.0.0/0            limit: avg 3/min burst 10 LOG flags 0 level 4 prefix "[UFW BLOCK] "
+
+Chain ufw-after-logging-output (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-after-output (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-before-forward (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0            icmptype 3
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0            icmptype 11
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0            icmptype 12
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0            icmptype 8
+    0     0 ufw-user-forward  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain ufw-before-input (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+ 2326  312K ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           
+ 4720 5363K ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    0     0 ufw-logging-deny  all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate INVALID
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate INVALID
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0            icmptype 3
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0            icmptype 11
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0            icmptype 12
+  291 10340 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0            icmptype 8
+    0     0 ACCEPT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:67 dpt:68
+  399 21762 ufw-not-local  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     udp  --  *      *       0.0.0.0/0            224.0.0.251          udp dpt:5353
+    0     0 ACCEPT     udp  --  *      *       0.0.0.0/0            239.255.255.250      udp dpt:1900
+  399 21762 ufw-user-input  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain ufw-before-logging-forward (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-before-logging-input (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-before-logging-output (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-before-output (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+ 2326  312K ACCEPT     all  --  *      lo      0.0.0.0/0            0.0.0.0/0           
+ 4623 5498K ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+  179 10774 ufw-user-output  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain ufw-logging-allow (0 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 LOG        all  --  *      *       0.0.0.0/0            0.0.0.0/0            limit: avg 3/min burst 10 LOG flags 0 level 4 prefix "[UFW ALLOW] "
+
+Chain ufw-logging-deny (2 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 RETURN     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate INVALID limit: avg 3/min burst 10
+    0     0 LOG        all  --  *      *       0.0.0.0/0            0.0.0.0/0            limit: avg 3/min burst 10 LOG flags 0 level 4 prefix "[UFW BLOCK] "
+
+Chain ufw-not-local (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+  399 21762 RETURN     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL
+    0     0 RETURN     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type MULTICAST
+    0     0 RETURN     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type BROADCAST
+    0     0 ufw-logging-deny  all  --  *      *       0.0.0.0/0            0.0.0.0/0            limit: avg 3/min burst 10
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain ufw-reject-forward (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-reject-input (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-reject-output (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-skip-to-policy-forward (0 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain ufw-skip-to-policy-input (7 references)
+ pkts bytes target     prot opt in     out     source               destination         
+   21  1076 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain ufw-skip-to-policy-output (0 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain ufw-track-forward (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-track-input (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-track-output (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+  175 10500 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate NEW
+    4   274 ACCEPT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate NEW
+
+Chain ufw-user-forward (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-user-input (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:4242
+    0     0 ACCEPT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:4242
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+    0     0 ACCEPT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:80
+  174 10440 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:443
+    0     0 ACCEPT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:443
+    0     0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8080
+    0     0 DROP       udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:8080
+
+Chain ufw-user-limit (0 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 LOG        all  --  *      *       0.0.0.0/0            0.0.0.0/0            limit: avg 3/min burst 5 LOG flags 0 level 4 prefix "[UFW LIMIT BLOCK] "
+    0     0 REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-port-unreachable
+
+Chain ufw-user-limit-accept (0 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain ufw-user-logging-forward (0 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-user-logging-input (0 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-user-logging-output (0 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain ufw-user-output (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
