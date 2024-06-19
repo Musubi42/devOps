@@ -1,0 +1,31 @@
+services:
+  dockge:
+    container_name: oim-dockge
+    image: louislam/dockge:1
+    restart: unless-stopped
+    # ports:
+    #   # Host Port : Container Port
+    # - 5001:5001
+    volumes:
+    # Pour ordonner tous les projets dans différents dossier, je peux utiliser les symlinks
+    # /opt/monorepo
+    # ln -s /opt/monorepo /opt/stacks/monorepo
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/app/data
+      - /opt/stacks:/opt/stacks
+    networks:
+      - traefik
+    environment:
+      # Tell Dockge where is your stacks directory
+      - DOCKGE_STACKS_DIR=/opt/stacks
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dockge.rule=Host(`dockge.musubi.dev`)
+      - traefik.http.routers.dockge.entrypoints=websecure
+      - traefik.http.routers.dockge.tls=true
+      - traefik.http.routers.dockge.tls.certresolver=letsencryptresolver
+      - traefik.http.services.dockge.loadbalancer.server.port=5001
+      - ${watchtower_auto_update}
+networks:
+  traefik:
+    external: true
