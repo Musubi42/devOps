@@ -1,0 +1,134 @@
+services:
+  authentik_postgresql:
+    image: docker.io/library/postgres:12-alpine
+    container_name: authentik_postgresql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
+      POSTGRES_USER: ${PG_USER:-authentik}
+      POSTGRES_DB: ${PG_DB:-authentik}
+    env_file:
+      - .env
+    networks:
+      - authentik_internal
+  authentik_redis:
+    image: docker.io/library/redis:alpine
+    container_name: authentik_redis
+    command: --save 60 1 --loglevel warning
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    volumes:
+      - redis:/data
+    networks:
+      - authentik_internal
+  authentik_server:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2024.4.2}
+    container_name: authentik_server
+    restart: unless-stopped
+    command: server
+    environment:
+      AUTHENTIK_REDIS__HOST: authentik_redis
+      AUTHENTIK_POSTGRESQL__HOST: authentik_postgresql
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.authentik_router.rule=Host(`authentik.musubi.dev`)"
+      - "traefik.http.routers.authentik_router.entrypoints=web,websecure"
+      - "traefik.http.routers.authentik_router.tls=true"
+      - "traefik.http.routers.authentik_router.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.authentik_services.loadbalancer.server.port=9443"
+      - "traefik.http.services.authentik_services.loadbalancer.server.port=9000"
+      - "com.centurylinklabs.watchtower.enable=true"
+    volumes:
+      - ./volumes/media:/media
+      - ./volumes/custom-templates:/templates
+    env_file:
+      - .env
+    # ports:
+    #   - "${COMPOSE_PORT_HTTP:-9000}:9000"
+    #   - "${COMPOSE_PORT_HTTPS:-9443}:9443"
+    depends_on:
+      - authentik_postgresql
+      - authentik_redis
+    networks:
+      - traefik
+      - authentik_internal
+  authentik_worker:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2024.4.2}
+    container_name: authentik_worker
+    restart: unless-stopped
+    command: worker
+    environment:
+      AUTHENTIK_REDIS__HOST: authentik_redis
+      AUTHENTIK_POSTGRESQL__HOST: authentik_postgresql
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+    # `user: root` and the docker socket volume are optional.
+    # See more for the docker socket integration here:
+    # https://goauthentik.io/docs/outposts/integrations/docker
+    # Removing `user: root` also prevents the worker from fixing the permissions
+    # on the mounted folders, so when removing this make sure the folders have the correct UID/GID
+    # (1000:1000 by default)
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./volumes/media:/media
+      - ./volumes/certs:/certs
+      - ./volumes/custom-templates:/templates
+    env_file:
+      - .env
+    depends_on:
+      - authentik_postgresql
+      - authentik_redis
+    networks:
+      - authentik_internal
+
+  whoami-test:
+    image: traefik/whoami
+    container_name: whoami-test
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - traefik
+    environment:
+      - TZ
+    labels:
+      - "traefik.enable=true"
+      ## HTTP Routers
+      - "traefik.http.routers.whoami-test-rtr.rule=Host(`whoami-test.musubi.dev`)"
+      - "traefik.http.routers.whoami-test-rtr.entrypoints=websecure"
+      - "traefik.http.routers.whoami-test-rtr.tls=true"
+      - "traefik.http.routers.whoami-test-rtr.tls.certresolver=letsencryptresolver"
+      ## Middlewares
+      - "traefik.http.routers.whoami-test-rtr.middlewares=middlewares-authentik@file"
+
+volumes:
+  database:
+    driver: local
+  redis:
+    driver: local
+
+networks:
+  traefik:
+    external: true
+  authentik_internal:
+    driver: bridge
+
+
