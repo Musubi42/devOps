@@ -1,0 +1,53 @@
+# docker run \
+#     --name my_shlink \
+#     -p 8080:8080 \
+#     -e DEFAULT_DOMAIN=s.test \
+#     -e IS_HTTPS_ENABLED=true \
+#     -e GEOLITE_LICENSE_KEY=kjh23ljkbndskj345 \
+#     shlinkio/shlink:stable
+
+services:
+  shlink:
+    container_name: shlink
+    image: shlinkio/shlink:stable
+    environment:
+      - DEFAULT_DOMAIN=s.musubi.dev
+      - IS_HTTPS_ENABLED=true
+      - GEOLITE_LICENSE_KEY=${GEOLITE_LICENSE_KEY}
+      - INITIAL_API_KEY=${INITIAL_API_KEY}
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.shlink.rule=Host(`s.musubi.dev`)"
+      - "traefik.http.routers.shlink.entrypoints=websecure"
+      - "traefik.http.routers.shlink.tls=true"
+      - "traefik.http.routers.shlink.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.shlink.loadbalancer.server.port=8080"
+      # TODO: Check for non interrupting update
+      # - ${watchtower_auto_update}
+    restart: unless-stopped
+    env_file:
+      - .env
+
+  shlink-web:
+    container_name: shlink-web
+    image: shlinkio/shlink-web-client:stable
+    volumes:
+      - /opt/stacks/oim-shlink/volumes/servers.json:/usr/share/nginx/html/servers.json
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.shlink-web.rule=Host(`shlink.musubi.dev`)"
+      - "traefik.http.routers.shlink-web.entrypoints=websecure"
+      - "traefik.http.routers.shlink-web.tls=true"
+      - "traefik.http.routers.shlink-web.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.shlink-web.loadbalancer.server.port=8080"
+      # TODO: Check for non interrupting update
+      # - ${watchtower_auto_update}
+    restart: unless-stopped
+    
+networks:
+  traefik:
+    external: true
