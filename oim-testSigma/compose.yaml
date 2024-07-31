@@ -1,0 +1,47 @@
+services:
+  mysql:
+    image: mysql:5.7 # Replace with mysql:8.0.32 for m1
+    platform: linux/x86_64 # Replace with linux/arm64/v8 for m1
+    container_name: testsigma_mysql
+    restart: always
+    volumes:
+      - /opt/dev/testsigma/volumes/db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
+    ports:
+      - "3306"
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: out=$$(mysqladmin ping -h localhost -P 3306 -u root --password=root 2>&1); echo $$out | grep 'mysqld is alive' || { echo $$out; exit 1; }
+      interval: 1s
+      retries: 120
+    env_file:
+      - .env
+
+  testsigma_server:
+    image: testsigmahq/server:v3.0.1 # Replace with testsigmahq/server:v3.0.1-m1 for m1
+    container_name: testsigma_server
+    ports:
+      - "9090:9090"
+      - "444:444"
+    volumes:
+      - /opt/dev/testsigma/volumes/ts_data:/opt/app/ts_data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.testsigma_server.loadbalancer.server.port=100"
+      - "traefik.http.routers.testsigma_server.rule=Host(`testsigma.musubi.dev`)"
+      - "traefik.http.routers.testsigma_server.entrypoints=websecure"
+      - "traefik.http.routers.testsigma_server.tls.certresolver=letsencryptresolver"
+      # WatchTower auto update
+      # TODO: Check for non interrupting update
+      - "com.centurylinklabs.watchtower.enable=true"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+networks:
+  traefik:
+    external: true
