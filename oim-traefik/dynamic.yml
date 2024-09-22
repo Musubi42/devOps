@@ -1,13 +1,21 @@
 http:
   routers:
+    testjs:
+      rule: "Host(`testjs.musubi.dev`)"
+      service: testjs
+      middlewares:
+        - https-redirect@file
+    homepage:
+      rule: "Host(`homepage.musubi.dev`)"
+      service: homepage
     express-api:
       rule: "Host(`api.design-gamers.com`)"
       service: express-api
       middlewares:
         - https-redirect@file
-    # pooger-api:
-    #   rule: "Host(`api.pooger.epitech.musubi.dev`)"
-    #   service: 
+    pooger-api:
+      rule: "Host(`api.pooger.epitech.musubi.dev`)"
+      service: 
     infisical:
       rule: "Host(`infisical.musubi.dev`) && PathPrefix(`/api`)"
       service: infisical
@@ -18,15 +26,28 @@ http:
       service: donation-api
       middlewares:
         - https-redirect@file
+    nextcloud:
+      rule: "Host(`nextcloud.musubi.dev`)"
+      service: nextcloud
+      middlewares:
+        - https-redirect
   services:
+    testjs:
+      loabBalancer:
+        servers:
+          - url: "http://172.17.0.1:3000"
+    homepage:
+      loadBalancer:
+        servers:
+          - url : "http://192.168.0.42:80"
     express-api:
       loadBalancer:
         servers:
           - url: "http://express-api:5555"
-    # pooger-api:
-    #   loadBalancer:
-    #     servers:
-    #       - url: "http://pooger-api:4000"
+    pooger-api:
+      loadBalancer:
+        servers:
+          - url: "http://pooger-api:4000"
     infisical:
       loadBalancer:
         servers:
@@ -35,6 +56,10 @@ http:
       loadBalancer:
         servers:
           - url: "http://donation-api:8081"
+    nextcloud:
+      loabBalancer:
+        servers:
+        - url: "http://192.168.100.11:80"
   middlewares:
     https-redirect:
       redirectScheme:
@@ -51,9 +76,10 @@ http:
             maxretry: "4"
           whitelist:
             ip: ::1,127.0.0.1
+    
     middlewares-authentik:
       forwardAuth:
-        address: "http://authentik_server:9000/outpost.goauthentik.io/auth/traefik"
+        address:
         trustForwardHeader: true
         authResponseHeaders:
           - X-authentik-username

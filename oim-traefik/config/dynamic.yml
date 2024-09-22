@@ -1,0 +1,21 @@
+http:
+  routers:
+    express:
+      entrypoints:
+        - "websecure"
+      rule: "Host(`express.musubi.dev`)"
+      tls: 
+        certResolver: letsencryptresolver
+      service: express
+      middlewares:
+        - https-redirect
+  services:
+    express:
+      loadBalancer:
+        servers:
+        - url: "http://localhost:3000"
+  middlewares:
+    https-redirect:
+      redirectSheme:
+        scheme: "https"
+        permanent: true

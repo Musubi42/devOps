@@ -15,12 +15,9 @@ services:
     volumes:
       - letsencrypt:/letsencrypt
       # - ./traefik.yml:/etc/traefik/traefik.yml
-      - ./config:/etc/traefik/config:ro
+      - ./dynamic.yml:/dynamic.yml
       - ./users.u:/users/users.u
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    environment:
-      - CF_API_EMAIL=${CF_API_EMAIL}
-      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
     restart: unless-stopped
     command:
       - "--accesslog=true"
@@ -48,7 +45,7 @@ services:
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
 
       # Express API
-      - "--providers.file.filename=/etc/traefik/config/dynamic.yml"
+      - "--providers.file.filename=/dynamic.yml"
 
       # Traefik plugins
       # - "--configfile=/etc/traefik/traefik.yml"

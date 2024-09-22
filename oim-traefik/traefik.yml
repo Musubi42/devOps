@@ -1,6 +1,34 @@
 # traefik.yml
-experimental:
-  plugins:
-    fail2ban:
-      moduleName: "github.com/tomMoulard/fail2ban"
-      version: "v0.7.1"
+# experimental:
+#   plugins:
+#     fail2ban:
+#       moduleName: "github.com/tomMoulard/fail2ban"
+#       version: "v0.7.1"
+api:
+  insecure: true
+  dashboard: true
+  
+providers:
+  docker:
+    watch: true
+    exposedByDefault: false
+  file:
+    directory: /etc/traefik/config
+    watch: true
+
+log:
+  level: DEBUG
+  format: common
+
+entryPoints:
+    websecure:
+        address: ":443"
+
+certificatesResolvers:
+    nan:
+        acme:
+            dnsChallenge:
+                    provider: "cloudflare"
+                    # CLOUDFLARE_EMAIL: 
+                    # CLOUDFLARE_API_KEY: 
+            storage: /letsencrypt/acme.json
