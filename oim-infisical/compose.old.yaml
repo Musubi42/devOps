@@ -1,0 +1,83 @@
+services:
+  frontend:
+    container_name: oim-infisical-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    image: infisical/frontend:v0.43.19
+    env_file: .env
+    environment:
+      - ROOT_ENCRYPTION_KEY=${ROOT_ENCRYPTION_KEY}
+      - NEXT_PUBLIC_POSTHOG_API_KEY=${POSTHOG_PROJECT_API_KEY}
+      # - INFISICAL_TELEMETRY_ENABLED=${TELEMETRY_ENABLED}
+      - INFISICAL_TELEMETRY_ENABLED=yes
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.youtrack_routers.rule=Host(`infisical.musubi.dev`)"
+      - "traefik.http.routers.youtrack_routers.entrypoints=websecure"
+      - "traefik.http.routers.youtrack_routers.tls=true"
+      - "traefik.http.routers.youtrack_routers.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.youtrack_services.loadbalancer.server.port=3000"
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  backend:
+    container_name: oim-infisical-backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    image: infisical/infisical:v0.43.19
+    env_file: .env
+    # ports:
+    #   - 8045:8080
+    environment:
+      - NODE_ENV=production
+    labels:
+      - "traefik.enable=true"
+      # WEB
+      - "traefik.http.routers.infisical_backend_routers.rule=Host(`infisical.musubi.dev`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.infisical_backend_routers.entrypoints=web"
+      - "traefik.http.routers.infisical_backend_routers.middlewares=https-redirect@file"
+
+      # - "traefik.http.routers.infisical_backend_routers.rule=Host(`infisical.musubi.dev`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.infisical_backend_routers.entrypoints=websecure"
+      - "traefik.http.routers.infisical_backend_routers.tls=true"
+      - "traefik.http.routers.infisical_backend_routers.tls.certresolver=letsencryptresolver"
+
+      - "traefik.http.routers.infisical_backend_routers.service=infisical"
+      - "traefik.http.services.infisical.loadbalancer.server.port=8080"
+    networks:
+      - internal
+      - traefik
+
+  redis:
+    image: redis
+    container_name: oim-infisical-dev-redis
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    # ports:
+    #   - 6379:6379
+    networks:
+      - internal
+    volumes:
+      - ./volumes/redis_data:/data
+
+  mongo:
+    container_name: oim-infisical-mongo
+    image: mongo
+    restart: always
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    volumes:
+      - ./volumes/mongo_data:/data/db
+    networks:
+      - internal
+
+networks:
+  traefik:
+    external: true
+  internal:
+    external: false

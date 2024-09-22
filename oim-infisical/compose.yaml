@@ -1,83 +1,77 @@
 services:
-  frontend:
-    container_name: oim-infisical-frontend
-    restart: unless-stopped
+  db-migration:
+    container_name: oim-infisical-db-migration
     depends_on:
-      - backend
-    image: infisical/frontend:v0.43.19
+      db:
+        condition: service_healthy
+    image: infisical/infisical:latest-postgres
     env_file: .env
-    environment:
-      - ROOT_ENCRYPTION_KEY=${ROOT_ENCRYPTION_KEY}
-      - NEXT_PUBLIC_POSTHOG_API_KEY=${POSTHOG_PROJECT_API_KEY}
-      # - INFISICAL_TELEMETRY_ENABLED=${TELEMETRY_ENABLED}
-      - INFISICAL_TELEMETRY_ENABLED=yes
+    command: npm run migration:latest
+    pull_policy: always
     networks:
-      - traefik
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.youtrack_routers.rule=Host(`infisical.musubi.dev`)"
-      - "traefik.http.routers.youtrack_routers.entrypoints=websecure"
-      - "traefik.http.routers.youtrack_routers.tls=true"
-      - "traefik.http.routers.youtrack_routers.tls.certresolver=letsencryptresolver"
-      - "traefik.http.services.youtrack_services.loadbalancer.server.port=3000"
-      - "com.centurylinklabs.watchtower.enable=true"
+      - infisical
 
   backend:
     container_name: oim-infisical-backend
     restart: unless-stopped
     depends_on:
-      - mongo
-    image: infisical/infisical:v0.43.19
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      db-migration:
+        condition: service_completed_successfully
+    image: infisical/infisical:latest-postgres
+    pull_policy: always
     env_file: .env
-    # ports:
-    #   - 8045:8080
     environment:
       - NODE_ENV=production
-    labels:
-      - "traefik.enable=true"
-      # WEB
-      - "traefik.http.routers.infisical_backend_routers.rule=Host(`infisical.musubi.dev`) && PathPrefix(`/api`)"
-      - "traefik.http.routers.infisical_backend_routers.entrypoints=web"
-      - "traefik.http.routers.infisical_backend_routers.middlewares=https-redirect@file"
-
-      # - "traefik.http.routers.infisical_backend_routers.rule=Host(`infisical.musubi.dev`) && PathPrefix(`/api`)"
-      - "traefik.http.routers.infisical_backend_routers.entrypoints=websecure"
-      - "traefik.http.routers.infisical_backend_routers.tls=true"
-      - "traefik.http.routers.infisical_backend_routers.tls.certresolver=letsencryptresolver"
-
-      - "traefik.http.routers.infisical_backend_routers.service=infisical"
-      - "traefik.http.services.infisical.loadbalancer.server.port=8080"
     networks:
-      - internal
+      - infisical
       - traefik
-
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.infisical.rule=Host(`infisical.musubi.dev`)"
+        - "traefik.http.routers.infisical.entrypoints=websecure"
+        - "traefik.http.routers.infisical.tls=true"
+        - "traefik.http.routers.infisical.tls.certresolver=letsencryptresolver"
+        - "traefik.http.services.infisical.loadbalancer.server.port=8080"
+        
   redis:
     image: redis
     container_name: oim-infisical-dev-redis
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-    # ports:
-    #   - 6379:6379
-    networks:
-      - internal
-    volumes:
-      - ./volumes/redis_data:/data
-
-  mongo:
-    container_name: oim-infisical-mongo
-    image: mongo
-    restart: always
     env_file: .env
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
-    volumes:
-      - ./volumes/mongo_data:/data/db
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 6379:6379
     networks:
-      - internal
+      - infisical
+    volumes:
+      - redis_data:/data
+
+  db:
+    container_name: oim-infisical-db
+    image: postgres:14-alpine
+    restart: always
+    env_file: .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - infisical
+    healthcheck:
+      test: "pg_isready --username=${POSTGRES_USER} && psql --username=${POSTGRES_USER} --list"
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+volumes:
+  pg_data:
+    driver: local
+  redis_data:
+    driver: local
 
 networks:
   traefik:
     external: true
-  internal:
-    external: false
+  infisical:
