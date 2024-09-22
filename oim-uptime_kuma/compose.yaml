@@ -1,0 +1,21 @@
+services:
+  oim-uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: oim-uptime-kuma
+    volumes:
+      - ./volumes/uptime-kuma:/app/data
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.uptime-kuma.rule=Host(`uptime.musubi.dev`)"
+      - "traefik.http.routers.uptime-kuma.entrypoints=websecure"
+      - "traefik.http.routers.uptime-kuma.tls=true"
+      - "traefik.http.routers.uptime-kuma.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.uptime-kuma.loadbalancer.server.port=3001"
+    restart: unless-stopped
+
+networks:
+  traefik:
+      name: traefik
+      external: true
