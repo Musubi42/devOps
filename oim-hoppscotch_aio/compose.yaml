@@ -1,0 +1,88 @@
+services:
+  hoppscotch-aio:
+    container_name: oim-hoppscotch-aio
+    image: 'hoppscotch/hoppscotch'
+    networks:
+      - traefik
+      - oim-hoppscotch-aio-network
+    volumes:
+      - pw_backend:/usr/src/app/node_modules/
+    labels:
+      # Create http to https middleware
+      - 'traefik.enable=true'
+      - 'traefik.http.middlewares.hoppscotch-redirect.redirectscheme.scheme=https'
+      - 'traefik.http.middlewares.hoppscotch-redirect.redirectscheme.permanent=true'
+      # cors middleware
+      - 'traefik.http.middlewares.cors.headers.accesscontrolallowmethods=GET,OPTIONS,PUT,POST'
+      - 'traefik.http.middlewares.cors.headers.accesscontrolallowheaders=Content-Type, Authorization, X-Requested-With'
+      - 'traefik.http.middlewares.cors.headers.accesscontrolallowcredentials=true'
+      - 'traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=https://hoppscotch.musubi.dev,https://admin-hoppscotch.musubi.dev'
+      - 'traefik.http.middlewares.cors.headers.accesscontrolmaxage=100'
+      - 'traefik.http.middlewares.cors.headers.addvaryheader=true'
+      # front-end http route
+      - 'traefik.http.routers.hoppscotch.middlewares=hoppscotch-redirect'
+      - 'traefik.http.routers.hoppscotch.rule=Host(`hoppscotch.musubi.dev`)'
+      - 'traefik.http.routers.hoppscotch.entrypoints=web'
+      - 'traefik.http.routers.hoppscotch.service=hoppscotch'
+      - 'traefik.http.services.hoppscotch.loadbalancer.server.port=3000'
+      # front-end https route
+      - 'traefik.http.routers.hoppscotch-secure.rule=Host(`hoppscotch.musubi.dev`)'
+      - 'traefik.http.routers.hoppscotch-secure.entrypoints=websecure'
+      - 'traefik.http.routers.hoppscotch-secure.tls=true'
+      - "traefik.http.routers.hoppscotch-secure.tls.certresolver=letsencryptresolver"
+      - 'traefik.http.routers.hoppscotch-secure.middlewares=cors'
+      - 'traefik.http.services.hoppscotch-secure.loadbalancer.server.port=3000'
+      - 'traefik.http.routers.hoppscotch-secure.service=hoppscotch-secure'
+      # admin dashboard https route
+      - 'traefik.http.routers.hoppscotch-admine.rule=Host(`admin-hoppscotch.musubi.dev`)'
+      - 'traefik.http.services.hoppscotch-admine.loadbalancer.server.port=3100'
+      - 'traefik.http.routers.hoppscotch-admine.entrypoints=websecure'
+      - 'traefik.http.routers.hoppscotch-admine.tls=true'
+      - "traefik.http.routers.hoppscotch-admine.tls.certresolver=letsencryptresolver"
+      - 'traefik.http.routers.hoppscotch-admine.service=hoppscotch-admine'
+      - 'traefik.http.routers.hoppscotch-admine.middlewares=cors'
+      # back-end https route
+      - 'traefik.http.routers.hoppscotch-api.rule=Host(`api-hoppscotch.musubi.dev`)'
+      - 'traefik.http.services.hoppscotch-api.loadbalancer.server.port=3170'
+      - 'traefik.http.routers.hoppscotch-api.entrypoints=websecure'
+      - 'traefik.http.routers.hoppscotch-api.tls=true'
+      - "traefik.http.routers.hoppscotch-api.tls.certresolver=letsencryptresolver"
+      - 'traefik.http.routers.hoppscotch-api.service=hoppscotch-api'
+      - 'traefik.http.routers.hoppscotch-api.middlewares=cors'
+    env_file:
+      - ./.env
+    depends_on:
+      hoppscotch-db:
+        condition: service_healthy
+    # ports:
+    #   - 3000:3000
+    #   - 3100:3100
+    #   - 3170:3170
+
+  hoppscotch-db:
+    image: postgres:15
+    container_name: oim-hoppscotch_aio_db
+    # ports:
+    #   - 5432:5432
+    networks:
+      - oim-hoppscotch-aio-network
+    volumes:
+      - pw_postgres_data:/var/lib/postgresql/data
+    env_file: ./.env
+    healthcheck:
+      test: "pg_isready --username=${POSTGRES_USER} && psql --username=${POSTGRES_USER} --list"
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+volumes:
+  pw_postgres_data:
+      driver: local
+  pw_backend:
+      driver: local
+
+networks:
+  traefik:
+    external: true
+  oim-hoppscotch-aio-network:
+    driver: bridge
