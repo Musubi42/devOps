@@ -4,22 +4,22 @@ version: '3'
 
 vars:
   AGE_KEY:
-    sh: less ./.env.tmp
+    sh: less ./.secrets/ageKey.tmp
 
 tasks:
   prompt-age-key:
     cmds:
       - |
         echo "Enter your age key: "
-        read -s AGE_KEY
+        read AGE_KEY
         if [ -z "$AGE_KEY" ]; then
           echo "Error: You need the age key to decrypt secrets" && exit 1
         fi
-        echo "$AGE_KEY" > .env.tmp
+        echo "$AGE_KEY" > .secrets/ageKey.tmp
 
   delete-age-key:
     cmds:
-      - rm -f .env.tmp
+      - rm -f .secrets/ageKey.tmp
 
   delete-dotEnv-file:
     cmds:
@@ -135,6 +135,10 @@ tasks:
   # create-docker-secrets:
   #   cmds:
 
+  export-age-key:
+    cmds:
+      - export SOPS_AGE_KEY_FILE=~/.secrets/age.key
+      
   docker-start-prod:
     cmds:
       # - docker build --build-arg NODE_ENV=production -t strapi-prod .
@@ -150,6 +154,7 @@ tasks:
   run-prod:
     cmds:
       - task delete-dotEnv-file
+      - task export-age-key
       - task prompt-age-key
       - task decrypt-prod-infisical-secrets
       - task delete-age-key

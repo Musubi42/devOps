@@ -126,3 +126,5 @@ build
 .secrets/infisical-agent-prod.yaml
 .secrets/secret-template-dev
 .secrets/secret-template-prod
+.secrets/age.key
+.secrets/agent-infisical-token
